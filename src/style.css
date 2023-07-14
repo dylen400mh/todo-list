@@ -46,7 +46,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
-
 }
 
 .sidebar-container {
@@ -61,6 +60,14 @@ body {
     border: 1px solid gray;
 }
 
+.projects-title,
+.todo-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
 /* CONTENT */
 
 .content {
@@ -72,9 +79,8 @@ body {
     color: gray;
 }
 
-.title {
+.todo-title {
     font-size: 2.5rem;
-    text-align: center;
     border-bottom: 2px solid #EBF6FF;
 }
 
@@ -86,4 +92,14 @@ body {
 
 .content-container:hover {
     background: #EBF6FF;
+}
+
+/* ADD BUTTON */
+
+.add-button {
+    width: 1.5rem;
+}
+
+.add-button:hover {
+    width: 2rem;
 }
