@@ -54,6 +54,9 @@ body {
     border-radius: 8px;
     border: 1px solid white;
     font-size: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sidebar-container:hover {
@@ -88,13 +91,27 @@ body {
     font-size: 1.1rem;
     padding: 1rem;
     border-bottom: 2px solid #EBF6FF;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .content-container:hover {
     background: #EBF6FF;
 }
 
-/* ADD BUTTON */
+/* BUTTONS */
+
+img:hover {
+    filter: grayscale(100%) contrast(10000%) brightness(0%);
+}
+
+.action-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
 
 .add-button {
     width: 1.5rem;
@@ -102,4 +119,10 @@ body {
 
 .add-button:hover {
     width: 2rem;
+}
+
+.edit-button,
+.delete-button,
+.info-button {
+    height: 1.5rem;
 }
