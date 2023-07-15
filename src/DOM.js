@@ -1,41 +1,42 @@
 import Info from "./Info.js";
 import Handler from "./Handler.js";
+import Modals from "./Modals.js";
 
 const DOM = (() => {
     const modal = document.querySelector(".modal");
-    const errorText = document.querySelectorAll(".error-text");
     const projectsContainer = document.querySelector(".projects");
-    const newProjectModal = document.querySelector("#new-project-modal");
-    const editProjectModal = document.querySelector("#edit-project-modal");
-    const newProjectTitleField = newProjectModal.querySelector(".project-title");
-    const editProjectTitleField = editProjectModal.querySelector(".project-title");
 
-    function displayModal(elementClicked, projectIndex = null) {
+    function displayModal(modalClicked, projectIndex = null) {
         modal.style.display = "block";
-        
+
         // display corresponding modal based on button click
-        if (elementClicked.classList.contains("new-project-button")) {
-            newProjectModal.style.display = "block";
-        } else if (elementClicked.classList.contains("edit-project-button")) {
-            editProjectTitleField.value = Info.projects[projectIndex].title;
-            editProjectModal.style.display = "block";
+        if (modalClicked === Modals.newProjectModal) {
+            showModal(modalClicked);
+        } else if (modalClicked === Modals.editProjectModal) {
+            const projectTitle = Info.projects[projectIndex].title;
+            showModal(modalClicked, projectTitle);
         }
     }
 
-    function resetModalFields() {
-        errorText.style.display = "none";
-        newProjectTitleField.value = "";
-        editProjectTitleField.value = "";
+    function showModal(modal, title = "") {
+        modal.element.style.display = "block";
+        modal.titleField.value = title;
+        modal.titleField.focus();
+    }
+
+    function resetModalFields(modal) {
+        modal.errorText.style.display = "none";
+        modal.titleField.value = "";
     }
 
     function closeModal(modalToClose) {
         modal.style.display = "none";
-        modalToClose.style.display = "none";
-        resetModalFields();
+        modalToClose.element.style.display = "none";
+        resetModalFields(modalToClose);
     }
 
-    function displayError() {
-        errorText.style.display = "block";
+    function displayError(modal) {
+        modal.errorText.style.display = "block";
     }
 
     function clearProjects() {

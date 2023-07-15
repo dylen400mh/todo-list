@@ -1,6 +1,7 @@
 import DOM from "./DOM.js";
 import Info from "./Info.js";
 import Project from "./Project.js";
+import Modals from "./Modals.js";
 
 const Handler = (() => {
 
@@ -9,23 +10,25 @@ const Handler = (() => {
     const cancelModalButtons = document.querySelectorAll(".cancel-button");
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
     const editProjectButtons = document.querySelectorAll(".edit-project-button");
-    const modalContainer = document.querySelector(".modal-container");
-    const modals = modalContainer.querySelectorAll("div");
-    const newProjectModal = document.querySelector("#new-project-modal");
-    const editProjectModal = document.querySelector("#edit-project-modal");
 
     // global variable
     let projectIndex = null
 
+    // create project and add to projects array
     function addProject(title) {
         const project = new Project(title);
         Info.projects.push(project);
-        DOM.displayProjects();
+        DOM.displayProjects(); //update display
     }
 
     function getProjectIndex(e) {
-        console.log(e.target.closest(".sidebar-container").getAttribute("index"))
-        return e.target.closest(".sidebar-container").getAttribute("index");
+        console.log("e.target " + e.target)
+        console.log("e.target.closest('.sidebar-container')" + e.target.closest(".sidebar-container"))
+        const sidebarContainer = e.target.closest(".sidebar-container");
+        console.log(sidebarContainer)
+        if (sidebarContainer) {
+            return sidebarContainer.getAttribute("index")
+        }
     }
 
     function getProject(index) {
@@ -40,21 +43,18 @@ const Handler = (() => {
     // validate form
     function validateForm(e) {
         const title = e.target.closest(".modal-content").querySelector("input").value;
-        const modalElement = e.target.closest(".modal-content").parentElement;
-
-
-        console.log(title)
+        const openModal = getOpenModal();
 
         if (title !== "") {
-            if (modalElement === newProjectModal) {
+            if (openModal === Modals.newProjectModal) {
                 addProject(title);
-            } else if (modalElement === editProjectModal) {
+            } else if (openModal === Modals.editProjectModal) {
                 editProject(getProject(projectIndex), title);
             }
 
-            DOM.closeModal(getOpenModal());
+            DOM.closeModal(openModal);
         } else {
-            DOM.displayError();
+            DOM.displayError(openModal);
         }
     }
 
@@ -63,13 +63,12 @@ const Handler = (() => {
     // handle edit button click
     function handleEditButtonClick(e) {
         projectIndex = getProjectIndex(e); // overwrite global variable
-        console.log(projectIndex)
-        DOM.displayModal(e.target, projectIndex);
+        DOM.displayModal(Modals.editProjectModal, projectIndex);
     }
 
     // display new project modal
     newProjectButton.addEventListener("click", (e) => {
-        DOM.displayModal(e.target);
+        DOM.displayModal(Modals.newProjectModal);
     })
 
     // display edit project modal
@@ -81,11 +80,16 @@ const Handler = (() => {
     function getOpenModal() {
         let openModal = null;
 
-        modals.forEach(modal => {
-            if (modal.style.display === "block") {
-                openModal = modal;
+        // loops through each modal checking which one is open
+        for (let modalKey in Modals) {
+
+            if (Modals.hasOwnProperty(modalKey)) {
+                const modal = Modals[modalKey];
+                if (modal.element.style.display === "block") {
+                    openModal = modal;
+                }
             }
-        });
+        }
 
         return openModal;
     }
