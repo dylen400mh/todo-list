@@ -33,13 +33,13 @@
         </div>
         <div class="projects-title">
             <span>Projects</span>
-            <img src="../src/images/icons8-add-32.png" alt="add button" class="add-button">
+            <img src="../src/images/icons8-add-32.png" alt="add button" class="add-button" id="new-project-button">
         </div>
 
+        <!-- DYNAMICALLY CREATED HERE-->
         <div class="projects">
-            <!-- DYNAMICALLY CREATED HERE-->
             <div class="sidebar-container">
-                <span>test</span>
+                <span>First Project</span>
                 <div class="action-buttons">
                     <img src="../src/images/icons8-edit-30.png" alt="" class="edit-button">
                     <img src="../src/images/icons8-delete-24.png" alt="" class="delete-button">
@@ -78,13 +78,37 @@
         </div>
         <div class="content-container">
             <div class="todo-info">
-                <div class="checkbox complete"></div>
+                <div class="checkbox"></div>
                 <span>Test something just type random stuff</span>
             </div>
             <div class="action-buttons">
                 <img src="../src/images/icons8-edit-30.png" alt="" class="edit-button">
                 <img src="../src/images/icons8-delete-24.png" alt="" class="delete-button">
                 <img src="../src/images/icons8-info-24.png" alt="" class="info-button">
+            </div>
+        </div>
+    </div>
+
+    <!--MODAL-->
+    <div class="modal">
+        <div class="modal-container">
+            <!--NEW PROJECT MODAL-->
+            <div id="new-project-modal">
+                <div class="modal-title">
+                    <span>Modal</span>
+                </div>
+                <div class="modal-content">
+                    <label for="project-title">
+                        Title
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" id="project-title" name="project-title">
+                    <span class="error-text">Please fill out this field</span>
+                    <div class="action-buttons">
+                        <button class="cancel-button">Cancel</button>
+                        <button class="confirm-button">Confirm</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
