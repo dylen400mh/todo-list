@@ -9,6 +9,7 @@ const Handler = (() => {
     const cancelModalButtons = document.querySelectorAll(".cancel-button");
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
     const editProjectButtons = document.querySelectorAll(".edit-project-button");
+    const deleteProjectButtons = document.querySelectorAll(".delete-project-button");
 
     // global variable
     let projectIndex = null
@@ -36,6 +37,11 @@ const Handler = (() => {
         DOM.displayProjects();
     }
 
+    // delete project by splicing projects array at project's index
+    function deleteProject(projectIndex) {
+        Info.projects.splice(projectIndex, 1);
+    }
+
     // validate form
     function validateForm(modal) {
         const title = modal.titleField.value; //get title from input box
@@ -58,6 +64,13 @@ const Handler = (() => {
     function handleEditButtonClick(e) {
         projectIndex = getProjectIndex(e); // overwrite global variable
         DOM.displayModal(Modals.editProjectModal, projectIndex);
+    }
+
+    // handle delete button click
+    function handleDeleteButtonClick(e) {
+        projectIndex = getProjectIndex(e);
+        deleteProject(projectIndex);
+        DOM.displayProjects();
     }
 
     // get open modal reference
@@ -85,7 +98,12 @@ const Handler = (() => {
 
     // display edit project modal
     editProjectButtons.forEach(button => {
-        button.addEventListener("click", handleEditButtonClick)
+        button.addEventListener("click", handleEditButtonClick);
+    })
+
+    // delete project button listener
+    deleteProjectButtons.forEach(button => {
+        button.addEventListener("click", handleDeleteButtonClick);
     })
 
     // close modal
@@ -114,7 +132,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick }
+    return { handleEditButtonClick, handleDeleteButtonClick }
 })();
 
 export default Handler;

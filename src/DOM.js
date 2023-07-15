@@ -72,6 +72,7 @@ const DOM = (() => {
             deleteButton.src = "../src/images/icons8-delete-24.png";
             deleteButton.classList.add("delete-button");
             deleteButton.classList.add("delete-project-button");
+            deleteButton.addEventListener("click", Handler.handleDeleteButtonClick)
 
             // add each button to action buttons div
             actionButtons.append(editButton, deleteButton);
