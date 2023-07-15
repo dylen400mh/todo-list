@@ -23,10 +23,7 @@ const Handler = (() => {
 
     // get project index
     function getProjectIndex(e) {
-        const sidebarContainer = e.target.closest(".sidebar-container");
-        if (sidebarContainer) {
-            return sidebarContainer.getAttribute("index")
-        }
+        return e.target.closest(".sidebar-container").getAttribute("index");
     }
 
     function getProject(index) {
