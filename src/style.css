@@ -189,6 +189,16 @@ img:hover {
     gap: 1rem;
 }
 
+/* DIFFERENT MODAL DISPLAY CONTAINERS */
+
+#new-project-modal {
+    display: none;
+}
+
+#edit-project-modal {
+    display: none;
+}
+
 /* FORM STYLES */
 
 input {

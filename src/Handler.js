@@ -3,52 +3,122 @@ import Info from "./Info.js";
 import Project from "./Project.js";
 
 const Handler = (() => {
-    document.addEventListener("DOMContentLoaded", () => {
-        const newProjectButton = document.querySelector("#new-project-button");
-        const modal = document.querySelector(".modal");
-        const cancelModalButton = document.querySelector(".cancel-button");
-        const confirmModalButton = document.querySelector(".confirm-button");
-        const projectTitleField = document.querySelector("#project-title");
 
-        // modal popup
-        newProjectButton.addEventListener("click", DOM.displayModal);
+    const newProjectButton = document.querySelector(".new-project-button");
+    const modal = document.querySelector(".modal");
+    const cancelModalButtons = document.querySelectorAll(".cancel-button");
+    const confirmModalButtons = document.querySelectorAll(".confirm-button");
+    const editProjectButtons = document.querySelectorAll(".edit-project-button");
+    const modalContainer = document.querySelector(".modal-container");
+    const modals = modalContainer.querySelectorAll("div");
+    const newProjectModal = document.querySelector("#new-project-modal");
+    const editProjectModal = document.querySelector("#edit-project-modal");
 
-        // close modal
-        modal.addEventListener("click", (e) => {
-            if (e.target.classList.contains("modal")) DOM.closeModal();
-        });
+    // global variable
+    let projectIndex = null
 
-        cancelModalButton.addEventListener("click", DOM.closeModal);
+    function addProject(title) {
+        const project = new Project(title);
+        Info.projects.push(project);
+        DOM.displayProjects();
+    }
 
-        // validate form
-        function validateForm() {
-            // check if there is a title entered. if there is grab it. if not display error msg
-            const title = projectTitleField.value;
+    function getProjectIndex(e) {
+        console.log(e.target.closest(".sidebar-container").getAttribute("index"))
+        return e.target.closest(".sidebar-container").getAttribute("index");
+    }
 
-            if (title) {
+    function getProject(index) {
+        return Info.projects[index];
+    }
+
+    function editProject(project, title) {
+        project.title = title;
+        DOM.displayProjects();
+    }
+
+    // validate form
+    function validateForm(e) {
+        const title = e.target.closest(".modal-content").querySelector("input").value;
+        const modalElement = e.target.closest(".modal-content").parentElement;
+
+
+        console.log(title)
+
+        if (title !== "") {
+            if (modalElement === newProjectModal) {
                 addProject(title);
-                DOM.closeModal();
-            } else {
-                DOM.displayError();
+            } else if (modalElement === editProjectModal) {
+                editProject(getProject(projectIndex), title);
             }
-        }
 
-        // validate form if user clicks the confirm button OR hits enter when the modal is open
-        confirmModalButton.addEventListener("click", validateForm)
-        document.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" && modal.style.display === "block") {
-                validateForm();
-            }
-        })
-
-        function addProject(title) {
-            const project = new Project(title);
-            Info.projects.push(project);
-            DOM.displayProjects();
-            console.log(Info.projects[0])
+            DOM.closeModal(getOpenModal());
+        } else {
+            DOM.displayError();
         }
+    }
+
+
+
+    // handle edit button click
+    function handleEditButtonClick(e) {
+        projectIndex = getProjectIndex(e); // overwrite global variable
+        console.log(projectIndex)
+        DOM.displayModal(e.target, projectIndex);
+    }
+
+    // display new project modal
+    newProjectButton.addEventListener("click", (e) => {
+        DOM.displayModal(e.target);
     })
 
+    // display edit project modal
+    editProjectButtons.forEach(button => {
+        button.addEventListener("click", handleEditButtonClick)
+    })
+
+    // get open modal reference
+    function getOpenModal() {
+        let openModal = null;
+
+        modals.forEach(modal => {
+            if (modal.style.display === "block") {
+                openModal = modal;
+            }
+        });
+
+        return openModal;
+    }
+
+    // close modal
+    modal.addEventListener("click", (e) => {
+        if (e.target.classList.contains("modal")) {
+            DOM.closeModal(getOpenModal());
+        }
+    });
+
+
+    // cancel modal buttons
+    cancelModalButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            DOM.closeModal(getOpenModal());
+        });
+    })
+
+    // validate form if user clicks the confirm button OR hits enter when the modal is open
+    confirmModalButtons.forEach(button => {
+        button.addEventListener("click", (e) => {
+            validateForm(e);
+        });
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && modal.style.display === "block") {
+                validateForm(e);
+            }
+        })
+    })
+
+
+    return { handleEditButtonClick }
 })();
 
 export default Handler;

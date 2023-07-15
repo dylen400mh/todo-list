@@ -33,7 +33,7 @@
         </div>
         <div class="projects-title">
             <span>Projects</span>
-            <img src="../src/images/icons8-add-32.png" alt="add button" class="add-button" id="new-project-button">
+            <img src="../src/images/icons8-add-32.png" alt="add button" class="add-button new-project-button">
         </div>
 
         <!-- DYNAMICALLY CREATED HERE-->
@@ -41,8 +41,8 @@
             <div class="sidebar-container">
                 <span>First Project</span>
                 <div class="action-buttons">
-                    <img src="../src/images/icons8-edit-30.png" alt="" class="edit-button">
-                    <img src="../src/images/icons8-delete-24.png" alt="" class="delete-button">
+                    <img src="../src/images/icons8-edit-30.png" alt="" class="edit-button edit-project-button">
+                    <img src="../src/images/icons8-delete-24.png" alt="" class="delete-button delete-project-button">
                 </div>
             </div>
         </div>
@@ -102,7 +102,27 @@
                         Title
                         <span class="required">*</span>
                     </label>
-                    <input type="text" id="project-title" name="project-title">
+                    <input type="text" id="project-title" name="project-title" class="project-title">
+                    <span class="error-text">Please fill out this field</span>
+                    <div class="action-buttons">
+                        <button class="cancel-button">Cancel</button>
+                        <button class="confirm-button">Confirm</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--EDIT PROJECT MODAL-->
+            <div id="edit-project-modal">
+                <div class="modal-title">
+                    <span>Edit Project</span>
+                </div>
+                <div class="modal-content">
+                    <label for="project-title">
+                        Title
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" id="project-title" name="project-title" class="project-title">
+                    <!--find a way to populate value-->
                     <span class="error-text">Please fill out this field</span>
                     <div class="action-buttons">
                         <button class="cancel-button">Cancel</button>
@@ -111,9 +131,8 @@
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="main.js"></script>
+        <script src="main.js"></script>
 </body>
 
 </html>
