@@ -21,11 +21,9 @@ const Handler = (() => {
         DOM.displayProjects(); //update display
     }
 
+    // get project index
     function getProjectIndex(e) {
-        console.log("e.target " + e.target)
-        console.log("e.target.closest('.sidebar-container')" + e.target.closest(".sidebar-container"))
         const sidebarContainer = e.target.closest(".sidebar-container");
-        console.log(sidebarContainer)
         if (sidebarContainer) {
             return sidebarContainer.getAttribute("index")
         }
