@@ -1,6 +1,5 @@
 const Info = (() => {
-    let projects = [];
-
+    let projects = [{ title: "First Project", todos: [] }];
     return { projects };
 })();
 
