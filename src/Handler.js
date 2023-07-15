@@ -26,50 +26,40 @@ const Handler = (() => {
         return e.target.closest(".sidebar-container").getAttribute("index");
     }
 
+    // return project at a specific index
     function getProject(index) {
         return Info.projects[index];
     }
 
+    // edit project by changing its title and updating display
     function editProject(project, title) {
         project.title = title;
         DOM.displayProjects();
     }
 
     // validate form
-    function validateForm(e) {
-        const title = e.target.closest(".modal-content").querySelector("input").value;
-        const openModal = getOpenModal();
+    function validateForm(modal) {
+        const title = modal.formInput.value; //get title from input box
 
+        // if a title was entered perform the appropriate action, else display error message
         if (title !== "") {
-            if (openModal === Modals.newProjectModal) {
+            if (modal === Modals.newProjectModal) {
                 addProject(title);
-            } else if (openModal === Modals.editProjectModal) {
+            } else if (modal === Modals.editProjectModal) {
                 editProject(getProject(projectIndex), title);
             }
 
-            DOM.closeModal(openModal);
+            DOM.closeModal(modal);
         } else {
-            DOM.displayError(openModal);
+            DOM.displayError(modal);
         }
     }
-
-
 
     // handle edit button click
     function handleEditButtonClick(e) {
         projectIndex = getProjectIndex(e); // overwrite global variable
         DOM.displayModal(Modals.editProjectModal, projectIndex);
     }
-
-    // display new project modal
-    newProjectButton.addEventListener("click", (e) => {
-        DOM.displayModal(Modals.newProjectModal);
-    })
-
-    // display edit project modal
-    editProjectButtons.forEach(button => {
-        button.addEventListener("click", handleEditButtonClick)
-    })
 
     // get open modal reference
     function getOpenModal() {
@@ -89,13 +79,22 @@ const Handler = (() => {
         return openModal;
     }
 
+    // display new project modal
+    newProjectButton.addEventListener("click", (e) => {
+        DOM.displayModal(Modals.newProjectModal);
+    })
+
+    // display edit project modal
+    editProjectButtons.forEach(button => {
+        button.addEventListener("click", handleEditButtonClick)
+    })
+
     // close modal
     modal.addEventListener("click", (e) => {
         if (e.target.classList.contains("modal")) {
             DOM.closeModal(getOpenModal());
         }
     });
-
 
     // cancel modal buttons
     cancelModalButtons.forEach(button => {
@@ -106,16 +105,15 @@ const Handler = (() => {
 
     // validate form if user clicks the confirm button OR hits enter when the modal is open
     confirmModalButtons.forEach(button => {
-        button.addEventListener("click", (e) => {
-            validateForm(e);
+        button.addEventListener("click", () => {
+            validateForm(getOpenModal());
         });
         document.addEventListener("keydown", (e) => {
             if (e.key === "Enter" && modal.style.display === "block") {
-                validateForm(e);
+                validateForm(getOpenModal());
             }
         })
     })
-
 
     return { handleEditButtonClick }
 })();
