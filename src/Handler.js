@@ -4,7 +4,6 @@ import Project from "./Project.js";
 import Modals from "./Modals.js";
 
 const Handler = (() => {
-
     const newProjectButton = document.querySelector(".new-project-button");
     const modal = document.querySelector(".modal");
     const cancelModalButtons = document.querySelectorAll(".cancel-button");
@@ -39,7 +38,7 @@ const Handler = (() => {
 
     // validate form
     function validateForm(modal) {
-        const title = modal.formInput.value; //get title from input box
+        const title = modal.titleField.value; //get title from input box
 
         // if a title was entered perform the appropriate action, else display error message
         if (title !== "") {
