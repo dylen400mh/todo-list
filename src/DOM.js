@@ -5,6 +5,7 @@ import Modals from "./Modals.js";
 const DOM = (() => {
     const modal = document.querySelector(".modal");
     const projectsContainer = document.querySelector(".projects");
+    const todosContainer = document.querySelector(".todos");
 
     // display corresponding modal based on button click
     function displayModal(modalClicked, projectIndex = null) {
@@ -88,7 +89,63 @@ const DOM = (() => {
         }
     }
 
-    return { displayModal, closeModal, displayError, displayProjects };
+    // clears todo display
+    function clearTodos() {
+        while (todosContainer.firstChild) {
+            todosContainer.removeChild(todosContainer.firstChild);
+        }
+    }
+
+    // display a project's todos (FOR NOW ITS JUST ALL OF THEM)
+    function displayTodos() {
+        // clear exisiting display
+        clearTodos();
+
+        const allTodos = Info.getAllTodos();
+
+        for (let i = 0; i < allTodos.length; i++) {
+            const todoContainer = document.createElement("div");
+            todoContainer.classList.add("content-container");
+
+            const todoInfo = document.createElement("div");
+            todoInfo.classList.add("todo-info");
+
+            const checkbox = document.createElement("div");
+            checkbox.classList.add("checkbox")
+            const todoTitle = document.createElement("span");
+            todoTitle.textContent = allTodos[i].title;
+            // HOW CAN I ADD DATE HERE
+
+            // add checkbox and todo title
+            todoInfo.append(checkbox, todoTitle);
+
+            const actionButtons = document.createElement("div");
+            actionButtons.classList.add("action-buttons");
+
+            const editButton = document.createElement("img");
+            editButton.src = "../src/images/icons8-edit-30.png";
+            editButton.classList.add("edit-button");
+            editButton.classList.add("edit-todo-button");
+            editButton.addEventListener("click", Handler.handleEditButtonClick); //MAYBE CHANGE THIS
+
+            const deleteButton = document.createElement("img");
+            deleteButton.src = "../src/images/icons8-delete-24.png";
+            deleteButton.classList.add("delete-button");
+            deleteButton.classList.add("delete-todo-button");
+            deleteButton.addEventListener("click", Handler.handleDeleteButtonClick) //MAYBE CHANGE THIS
+
+            // add each button to action buttons div
+            actionButtons.append(editButton, deleteButton);
+
+            // add todo info and action buttons to each container
+            todoContainer.append(todoInfo, actionButtons);
+
+            // add container to todos display
+            todosContainer.appendChild(todoContainer);
+        }
+    }
+
+    return { displayModal, closeModal, displayError, displayProjects, displayTodos };
 })();
 
 export default DOM;

@@ -2,6 +2,7 @@ import DOM from "./DOM.js";
 import Info from "./Info.js";
 import Project from "./Project.js";
 import Modals from "./Modals.js";
+import Todo from "./Todo.js";
 
 const Handler = (() => {
     const newProjectButton = document.querySelector(".new-project-button");
@@ -43,16 +44,39 @@ const Handler = (() => {
         Info.projects.splice(projectIndex, 1);
     }
 
+    // create new todo
+    function addTodo(title, description, dueDate, priority) {
+        const todo = new Todo(title, description, dueDate, priority);
+        const currentProject = Info.projects[0]; //GENERALIZE THIS LATER TO BE CHOSEN PROJECT
+        currentProject.todos.push(todo);
+        DOM.displayTodos();
+    }
+
     // validate form
     function validateForm(modal) {
         const title = modal.titleField.value; //get title from input box
+        let description, dueDate, priority; // declare todo variables
+        
+        //if validating a todo form get the other values
+        if (modal === Modals.newTodoModal) {
+            description = modal.descField.value;
+            dueDate = modal.dueDateField.value;
+            priority = modal.priorityField.value;
+        }
 
         // if a title was entered perform the appropriate action, else display error message
         if (title !== "") {
+            // add new project
             if (modal === Modals.newProjectModal) {
                 addProject(title);
-            } else if (modal === Modals.editProjectModal) {
+            } 
+            // edit existing project
+            else if (modal === Modals.editProjectModal) {
                 editProject(getProject(projectIndex), title);
+            } 
+            // create new todo
+            else if (modal === Modals.newTodoModal) {
+                addTodo(title, description, dueDate, priority);
             }
 
             DOM.closeModal(modal);
