@@ -123,11 +123,13 @@ const DOM = (() => {
             checkbox.classList.add("checkbox")
             const todoTitle = document.createElement("span");
             todoTitle.textContent = allTodos[i].title;
-            // HOW CAN I ADD DATE HERE
+            const dueDate = document.createElement("span");
+            dueDate.classList.add("date");
+            dueDate.textContent = allTodos[i].date;
 
             // add checkbox and todo title styles then add to info
             addTodoStyles(allTodos[i], checkbox, todoTitle);
-            todoInfo.append(checkbox, todoTitle);
+            todoInfo.append(checkbox, todoTitle, dueDate);
 
             const actionButtons = document.createElement("div");
             actionButtons.classList.add("action-buttons");

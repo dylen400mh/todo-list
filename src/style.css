@@ -90,9 +90,11 @@ body {
     align-items: center;
     gap: 1rem;
     overflow: hidden;
+    flex: 1;
 }
 
-.todo-info span, .sidebar-container span {
+.todo-info span,
+.sidebar-container span {
     display: inline-block;
     white-space: nowrap;
     overflow: hidden;
@@ -125,12 +127,18 @@ body {
     justify-content: space-between;
     gap: 0.5rem;
     align-items: center;
-    
+
 }
 
 .content-container:hover {
     background: #EBF6FF;
     cursor: pointer;
+}
+
+.date {
+    font-size: 0.75rem;
+    flex: 1 0 auto;
+    text-align: flex-end;
 }
 
 /* BUTTONS */
