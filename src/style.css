@@ -134,14 +134,7 @@ img:hover {
     gap: 0.5rem;
 }
 
-.add-button {
-    min-width: 1.5rem;
-}
-
-.add-button:hover {
-    min-width: 2rem;
-}
-
+.add-button,
 .edit-button,
 .delete-button,
 .info-button {
