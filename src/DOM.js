@@ -123,7 +123,7 @@ const DOM = (() => {
             checkbox.classList.add("checkbox")
             const todoTitle = document.createElement("span");
             todoTitle.textContent = allTodos[i].title;
-            const dueDate = document.createElement("span");
+            const dueDate = document.createElement("div");
             dueDate.classList.add("date");
             dueDate.textContent = allTodos[i].date;
 

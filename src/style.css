@@ -137,8 +137,8 @@ body {
 
 .date {
     font-size: 0.75rem;
-    flex: 1 0 auto;
-    text-align: flex-end;
+    margin-left: auto;
+    white-space: nowrap;
 }
 
 /* BUTTONS */
