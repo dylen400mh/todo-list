@@ -10,6 +10,7 @@ const Handler = (() => {
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
     const editProjectButtons = document.querySelectorAll(".edit-project-button");
     const deleteProjectButtons = document.querySelectorAll(".delete-project-button");
+    const newTodoButton = document.querySelector(".new-todo-button");
 
     // global variable
     let projectIndex = null
@@ -92,7 +93,7 @@ const Handler = (() => {
     }
 
     // display new project modal
-    newProjectButton.addEventListener("click", (e) => {
+    newProjectButton.addEventListener("click", () => {
         DOM.displayModal(Modals.newProjectModal);
     })
 
@@ -104,6 +105,11 @@ const Handler = (() => {
     // delete project button listener
     deleteProjectButtons.forEach(button => {
         button.addEventListener("click", handleDeleteButtonClick);
+    })
+
+    // display new todo modal
+    newTodoButton.addEventListener("click", () => {
+        DOM.displayModal(Modals.newTodoModal);
     })
 
     // close modal

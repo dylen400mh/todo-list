@@ -6,13 +6,16 @@ const DOM = (() => {
     const modal = document.querySelector(".modal");
     const projectsContainer = document.querySelector(".projects");
 
+    // display corresponding modal based on button click
     function displayModal(modalClicked, projectIndex = null) {
-        modal.style.display = "block";
+        modal.style.display = "block"; //modal general display
 
-        // display corresponding modal based on button click
-        if (modalClicked === Modals.newProjectModal) {
+        // new modals
+        if (modalClicked === Modals.newProjectModal || modalClicked === Modals.newTodoModal) {
             showModal(modalClicked);
-        } else if (modalClicked === Modals.editProjectModal) {
+        }
+        // edit modals
+        else if (modalClicked === Modals.editProjectModal) {
             const projectTitle = Info.projects[projectIndex].title;
             showModal(modalClicked, projectTitle);
         }

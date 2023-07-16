@@ -64,7 +64,7 @@ body {
 }
 
 .projects-title,
-.todo-title {
+.todos-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -101,7 +101,7 @@ body {
     background-size: fill;
 }
 
-.todo-title {
+.todos-title {
     font-size: 2.5rem;
     border-bottom: 2px solid #EBF6FF;
 }
@@ -158,9 +158,9 @@ img:hover {
 
 .modal-container {
     background-color: white;
-    margin: 15% auto;
+    margin: 10% auto;
     border: 1px solid gray;
-    width: 30%;
+    width: max(320px, 30%);
     display: flex;
     flex-direction: column;
 }
@@ -184,17 +184,13 @@ img:hover {
 
 /* DIFFERENT MODAL DISPLAY CONTAINERS */
 
-#new-project-modal {
-    display: none;
-}
-
-#edit-project-modal {
+#new-project-modal, #edit-project-modal, #new-todo-modal {
     display: none;
 }
 
 /* FORM STYLES */
 
-input {
+input, select {
     border: 2px solid gray;
     outline: none;
     border-radius: 5px;
