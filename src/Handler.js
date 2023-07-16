@@ -12,9 +12,7 @@ const Handler = (() => {
     const editProjectButtons = document.querySelectorAll(".edit-project-button");
     const deleteProjectButtons = document.querySelectorAll(".delete-project-button");
     const newTodoButton = document.querySelector(".new-todo-button");
-
-    // global variable
-    let projectIndex = null
+    const todoContainers = document.querySelectorAll(".content-container");
 
     // create project and add to projects array
     function addProject(title) {
@@ -52,11 +50,27 @@ const Handler = (() => {
         DOM.displayTodos();
     }
 
+    // get todo index
+    function getTodoIndex(e) {
+        return e.target.closest(".content-container").getAttribute("index");
+    }
+
+    // get todo object (CHANGE LATER TO APPLY TO ANY PROJECT)
+    function getTodo(index) {
+        return Info.projects[0].todos[index];
+    }
+
+    // // toggle complete/incomplete status todo (CHANGE TO APPLY TO ANY PROJECT)
+    function toggleComplete(index) {
+        const todo = getTodo(index);
+        todo.complete = (todo.complete) ? false : true;
+    }
+
     // validate form
     function validateForm(modal) {
         const title = modal.titleField.value; //get title from input box
         let description, dueDate, priority; // declare todo variables
-        
+
         //if validating a todo form get the other values
         if (modal === Modals.newTodoModal) {
             description = modal.descField.value;
@@ -69,11 +83,11 @@ const Handler = (() => {
             // add new project
             if (modal === Modals.newProjectModal) {
                 addProject(title);
-            } 
+            }
             // edit existing project
             else if (modal === Modals.editProjectModal) {
-                editProject(getProject(projectIndex), title);
-            } 
+                editProject(getProject(index), title);
+            }
             // create new todo
             else if (modal === Modals.newTodoModal) {
                 addTodo(title, description, dueDate, priority);
@@ -87,15 +101,19 @@ const Handler = (() => {
 
     // handle edit button click
     function handleEditButtonClick(e) {
-        projectIndex = getProjectIndex(e); // overwrite global variable
-        DOM.displayModal(Modals.editProjectModal, projectIndex);
+        DOM.displayModal(Modals.editProjectModal, getProjectIndex(e));
     }
 
     // handle delete button click
     function handleDeleteButtonClick(e) {
-        projectIndex = getProjectIndex(e);
-        deleteProject(projectIndex);
+        deleteProject(getProjectIndex(e));
         DOM.displayProjects();
+    }
+
+    // handle todo click (toggling complete)
+    function handleTodoClick(e) {
+        toggleComplete(getTodoIndex(e));
+        DOM.displayTodos();
     }
 
     // get open modal reference
@@ -136,6 +154,11 @@ const Handler = (() => {
         DOM.displayModal(Modals.newTodoModal);
     })
 
+    // handle toggle complete status when clicking todo
+    todoContainers.forEach(container => {
+        container.addEventListener("click", handleTodoClick);
+    })
+
     // close modal
     modal.addEventListener("click", (e) => {
         if (e.target.classList.contains("modal")) {
@@ -162,7 +185,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick }
 })();
 
 export default Handler;

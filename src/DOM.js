@@ -106,6 +106,8 @@ const DOM = (() => {
         for (let i = 0; i < allTodos.length; i++) {
             const todoContainer = document.createElement("div");
             todoContainer.classList.add("content-container");
+            todoContainer.setAttribute("index", i);
+            todoContainer.addEventListener("click", Handler.handleTodoClick);
 
             const todoInfo = document.createElement("div");
             todoInfo.classList.add("todo-info");
@@ -116,7 +118,8 @@ const DOM = (() => {
             todoTitle.textContent = allTodos[i].title;
             // HOW CAN I ADD DATE HERE
 
-            // add checkbox and todo title
+            // add checkbox and todo title styles then add to info
+            addTodoStyles(allTodos[i], checkbox, todoTitle);
             todoInfo.append(checkbox, todoTitle);
 
             const actionButtons = document.createElement("div");
@@ -142,6 +145,14 @@ const DOM = (() => {
 
             // add container to todos display
             todosContainer.appendChild(todoContainer);
+        }
+    }
+
+    // add complete/incomplete todo styles
+    function addTodoStyles(todo, checkbox, todoTitle) {
+        if (todo.complete) {
+            checkbox.classList.add("complete");
+            todoTitle.style.textDecoration = "line-through";
         }
     }
 
