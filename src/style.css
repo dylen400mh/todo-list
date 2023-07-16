@@ -86,6 +86,12 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+    overflow: hidden;
+}
+
+.todo-info span {
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .checkbox {
