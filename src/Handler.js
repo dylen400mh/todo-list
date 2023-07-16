@@ -12,7 +12,9 @@ const Handler = (() => {
     const editProjectButtons = document.querySelectorAll(".edit-project-button");
     const deleteProjectButtons = document.querySelectorAll(".delete-project-button");
     const newTodoButton = document.querySelector(".new-todo-button");
-    const todoContainers = document.querySelectorAll(".content-container");
+    const todoContainers = document.querySelectorAll(".todo-info");
+    const editTodoButtons = document.querySelectorAll(".edit-todo-button");
+    const deleteTodoButtons = document.querySelectorAll(".delete-todo-button");
 
     // global variable
     let index;
@@ -102,15 +104,29 @@ const Handler = (() => {
         }
     }
 
-    // handle edit button click
-    function handleEditButtonClick(e) {
-        index = getProjectIndex(e)
-        DOM.displayModal(Modals.editProjectModal, index);
+    // handle edit button click (FIX THIS TO BE ANY PROJECT)
+    function handleEditButtonClick(e, object) {
+        console.log("tried to edit")
+        console.log(object)
+
+        if (object === "todo") {
+            index = getTodoIndex(e);
+            DOM.displayModal(Modals.editTodoModal, 0, index);
+        }
+
+        if (object === "project") {
+            index = getProjectIndex(e);
+            DOM.displayModal(Modals.editProjectModal, index);
+        }
     }
 
     // handle delete button click
-    function handleDeleteButtonClick(e) {
-        deleteProject(getProjectIndex(e));
+    function handleDeleteButtonClick(e, object) {
+        // get index based on type of object (todo or project)
+        console.log("tried to delete")
+        console.log(object)
+        index = (object === "todo") ? getTodoIndex(e) : getProjectIndex(e);
+        deleteProject(index);
         DOM.displayProjects();
     }
 
@@ -143,24 +159,9 @@ const Handler = (() => {
         DOM.displayModal(Modals.newProjectModal);
     })
 
-    // display edit project modal
-    editProjectButtons.forEach(button => {
-        button.addEventListener("click", handleEditButtonClick);
-    })
-
-    // delete project button listener
-    deleteProjectButtons.forEach(button => {
-        button.addEventListener("click", handleDeleteButtonClick);
-    })
-
     // display new todo modal
     newTodoButton.addEventListener("click", () => {
         DOM.displayModal(Modals.newTodoModal);
-    })
-
-    // handle toggle complete status when clicking todo
-    todoContainers.forEach(container => {
-        container.addEventListener("click", handleTodoClick);
     })
 
     // close modal
