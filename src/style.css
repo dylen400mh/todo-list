@@ -34,6 +34,7 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    overflow: hidden;
 }
 
 .sidebar span {
@@ -89,7 +90,7 @@ body {
     overflow: hidden;
 }
 
-.todo-info span {
+span {
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -190,13 +191,16 @@ img:hover {
 
 /* DIFFERENT MODAL DISPLAY CONTAINERS */
 
-#new-project-modal, #edit-project-modal, #new-todo-modal {
+#new-project-modal,
+#edit-project-modal,
+#new-todo-modal {
     display: none;
 }
 
 /* FORM STYLES */
 
-input, select {
+input,
+select {
     border: 2px solid gray;
     outline: none;
     border-radius: 5px;
