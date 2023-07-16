@@ -14,6 +14,9 @@ const Handler = (() => {
     const newTodoButton = document.querySelector(".new-todo-button");
     const todoContainers = document.querySelectorAll(".content-container");
 
+    // global variable
+    let index;
+
     // create project and add to projects array
     function addProject(title) {
         const project = new Project(title);
@@ -101,7 +104,8 @@ const Handler = (() => {
 
     // handle edit button click
     function handleEditButtonClick(e) {
-        DOM.displayModal(Modals.editProjectModal, getProjectIndex(e));
+        index = getProjectIndex(e)
+        DOM.displayModal(Modals.editProjectModal, index);
     }
 
     // handle delete button click

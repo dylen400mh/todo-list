@@ -31,6 +31,13 @@ const DOM = (() => {
     function resetModalFields(modal) {
         modal.errorText.style.display = "none";
         modal.titleField.value = "";
+
+        // reset additional fields for todo modals
+        if (modal === Modals.newTodoModal) {
+            modal.descField.value = "";
+            modal.dueDateField.value = "";
+            modal.priorityField.value = "none";
+        }
     }
 
     function closeModal(modalToClose) {
