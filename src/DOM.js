@@ -148,11 +148,23 @@ const DOM = (() => {
         }
     }
 
-    // add complete/incomplete todo styles
+    // add complete/incomplete todo styles + priority colour coding
     function addTodoStyles(todo, checkbox, todoTitle) {
         if (todo.complete) {
             checkbox.classList.add("complete");
             todoTitle.style.textDecoration = "line-through";
+        }
+
+        if (todo.priority === "low") {
+            todoTitle.style.color = "#32CD32";
+        }
+
+        if (todo.priority === "medium") {
+            todoTitle.style.color = "#DAA520";
+        }
+
+        if (todo.priority === "high") {
+            todoTitle.style.color = "#FF6347";
         }
     }
 
