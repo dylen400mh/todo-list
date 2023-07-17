@@ -9,12 +9,8 @@ const Handler = (() => {
     const modal = document.querySelector(".modal");
     const cancelModalButtons = document.querySelectorAll(".cancel-button");
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
-    const editProjectButtons = document.querySelectorAll(".edit-project-button");
-    const deleteProjectButtons = document.querySelectorAll(".delete-project-button");
     const newTodoButton = document.querySelector(".new-todo-button");
-    const todoContainers = document.querySelectorAll(".todo-info");
-    const editTodoButtons = document.querySelectorAll(".edit-todo-button");
-    const deleteTodoButtons = document.querySelectorAll(".delete-todo-button");
+    const projectsContainer = document.querySelector(".projects");
 
     // global variable
     let index;
@@ -118,6 +114,17 @@ const Handler = (() => {
         }
     }
 
+    // unselects a project
+    function unselectProject() {
+        const selectedProject = Info.projects.filter(project => project.selected)[0];
+        selectedProject.selected = false;
+    }
+
+    // selects a project 
+    function selectProject(project) {
+        project.selected = true;
+    }
+
     // handle edit button click (FIX THIS TO BE ANY PROJECT)
     function handleEditButtonClick(e, object) {
         if (object === "todo") {
@@ -157,6 +164,21 @@ const Handler = (() => {
     function handleTodoInfoClick(e) {
         index = getTodoIndex(e);
         DOM.displayModal(Modals.todoInfoModal, 0, index)
+    }
+
+    // handles project click
+    function handleProjectClick(e) {
+        index = getProjectIndex(e);
+        const project = Info.projects[index];
+
+        // unselect current project
+        unselectProject()
+
+        // select new project
+        selectProject(project);
+
+        // update displays
+        DOM.updateDisplay();
     }
 
     // get open modal reference
@@ -213,7 +235,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleProjectClick }
 })();
 
 export default Handler;

@@ -119,6 +119,15 @@ const DOM = (() => {
             const projectContainer = document.createElement("div");
             projectContainer.classList.add("sidebar-container");
             projectContainer.setAttribute("index", i);
+            projectContainer.addEventListener("click", (e) => {
+                e.stopPropagation()
+                Handler.handleProjectClick(e);
+            });
+
+            // if this project is selected, add the selected style
+            if (Info.projects[i].selected) {
+                addSelectedStyle(projectContainer);
+            }
 
             const projectTitle = document.createElement("span");
             projectTitle.textContent = Info.projects[i].title;
@@ -131,6 +140,7 @@ const DOM = (() => {
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-project-button");
             editButton.addEventListener("click", (e) => {
+                e.stopPropagation()
                 Handler.handleEditButtonClick(e, "project")
             });
 
@@ -141,6 +151,7 @@ const DOM = (() => {
                 deleteButton.classList.add("delete-button");
                 deleteButton.classList.add("delete-project-button");
                 deleteButton.addEventListener("click", (e) => {
+                    e.stopPropagation()
                     Handler.handleDeleteButtonClick(e, "project")
                 })
 
@@ -254,9 +265,21 @@ const DOM = (() => {
     }
 
     // update display
-    function updateDisplay() {
+    function updateDisplay(e) {
         displayProjects();
         displayTodos();
+    }
+
+    // select project by adding the selected style
+    function addSelectedStyle(projectContainer) {
+        // add selected property to new element
+        projectContainer.classList.add("selected");
+    }
+
+    // update selected style?????????
+    function updateSelectedStyle(e) {
+        removeSelectedStyle();
+        addSelectedStyle(e);
     }
 
     return { displayModal, closeModal, displayError, updateDisplay };
