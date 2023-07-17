@@ -207,8 +207,32 @@ img:hover {
 
 #new-project-modal,
 #edit-project-modal,
-#new-todo-modal, #edit-todo-modal {
+#new-todo-modal, #edit-todo-modal, #todo-info-modal {
     display: none;
+}
+
+
+
+#todo-info-modal .attribute-container {
+    border-bottom: 2px solid #EBF6FF;
+    padding-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.attribute-container .attribute {
+    width: 150px;
+}
+
+.attribute-container .value {
+    color: gray;
+    font-size: 1rem;
+    flex: 1;
+}
+
+.attribute-container .todo-description {
+    height: 100px;
+    overflow-y: scroll;
 }
 
 /* FORM STYLES */

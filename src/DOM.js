@@ -15,17 +15,30 @@ const DOM = (() => {
         if (modalClicked === Modals.newProjectModal || modalClicked === Modals.newTodoModal) {
             showModal(modalClicked);
         }
-        // edit todo modal
-        if (modalClicked === Modals.editTodoModal) {
+        // todo-related modals
+        if (modalClicked === Modals.editTodoModal || modalClicked === Modals.todoInfoModal) {
 
-            const todo = Info.projects[projectIndex].todos[todoIndex]
+            const project = Info.projects[projectIndex];
+            const todo = project.todos[todoIndex]
 
             const title = todo.title;
             const description = todo.description;
             const date = todo.date;
             const priority = todo.priority;
 
-            showModal(modalClicked, title, description, date, priority);
+            // if todo info modal grab extra values
+            if (modalClicked === Modals.todoInfoModal) {
+                const complete = todo.complete;
+                const projectTitle = project.title;
+
+                showModal(modalClicked, title, description, date, priority, complete, projectTitle);
+            }
+
+            // if edit todo modal
+            else {
+                showModal(modalClicked, title, description, date, priority);
+            }
+
         }
         //edit project modal
         if (modalClicked === Modals.editProjectModal) {
@@ -34,19 +47,34 @@ const DOM = (() => {
         }
     }
 
-    function showModal(modal, title = "", description = "", date = "", priority = "") {
+    function showModal(modal, title = "", description = "", date = "", priority = "", complete = "", project = "") {
         modal.element.style.display = "block";
-        modal.titleField.value = title;
-        modal.titleField.focus();
 
-        // set additional fields for todo modal
-        if (modal === Modals.editTodoModal) {
-            modal.descField.value = description;
-            modal.dueDateField.value = date;
-            modal.priorityField.value = priority;
+        // modify textContent if todo info modal clicked
+        if (modal === Modals.todoInfoModal) {
+            modal.titleField.textContent = title;
+            modal.descField.textContent = description;
+            modal.dueDateField.textContent = date;
+            modal.priorityField.textContent = priority;
+            modal.completeField.textContent = complete;
+            modal.projectField.textContent = project;
+        }
+
+        // if todo info field wasn't clicked
+        else {
+            modal.titleField.value = title;
+            modal.titleField.focus();
+
+            // set additional fields for edit todo modal
+            if (modal === Modals.editTodoModal) {
+                modal.descField.value = description;
+                modal.dueDateField.value = date;
+                modal.priorityField.value = priority;
+            }
         }
     }
 
+    // resets input fields / error messages
     function resetModalFields(modal) {
         modal.errorText.style.display = "none";
         modal.titleField.value = "";
@@ -62,7 +90,10 @@ const DOM = (() => {
     function closeModal(modalToClose) {
         modal.style.display = "none";
         modalToClose.element.style.display = "none";
-        resetModalFields(modalToClose);
+
+        if (modalToClose !== Modals.todoInfoModal) {
+            resetModalFields(modalToClose);
+        }
     }
 
     function displayError(modal) {
@@ -180,8 +211,16 @@ const DOM = (() => {
                 Handler.handleDeleteButtonClick(e, "todo");
             })
 
+            const infoButton = document.createElement("img");
+            infoButton.src = "../src/images/icons8-info-24.png";
+            infoButton.classList.add("info-button");
+            infoButton.addEventListener("click", (e) => {
+                e.stopPropagation(); //prevents todo from being toggled complete
+                Handler.handleTodoInfoClick(e);
+            })
+
             // add each button to action buttons div
-            actionButtons.append(editButton, deleteButton);
+            actionButtons.append(editButton, deleteButton, infoButton);
 
             // add todo info and action buttons to each container
             todoContainer.append(todoInfo, actionButtons);

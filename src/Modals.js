@@ -29,7 +29,17 @@ const Modals = (() => {
         errorText: document.querySelector("#edit-todo-modal .error-text"),
     }
 
-    return { newProjectModal, editProjectModal, newTodoModal, editTodoModal };
+    const todoInfoModal = {
+        element: document.querySelector("#todo-info-modal"),
+        titleField: document.querySelector("#todo-info-modal .todo-title"),
+        descField: document.querySelector("#todo-info-modal .todo-description"),
+        dueDateField: document.querySelector("#todo-info-modal .todo-date"),
+        priorityField: document.querySelector("#todo-info-modal .todo-priority"),
+        completeField: document.querySelector("#todo-info-modal .todo-complete"),
+        projectField: document.querySelector("#todo-info-modal .todo-project"),
+    }
+
+    return { newProjectModal, editProjectModal, newTodoModal, editTodoModal, todoInfoModal };
 })();
 
 

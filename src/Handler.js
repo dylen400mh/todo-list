@@ -153,6 +153,12 @@ const Handler = (() => {
         DOM.updateDisplay();
     }
 
+    // handles todo info button click (MAKE WORK FOR ANY PROJECT)
+    function handleTodoInfoClick(e) {
+        index = getTodoIndex(e);
+        DOM.displayModal(Modals.todoInfoModal, 0, index)
+    }
+
     // get open modal reference
     function getOpenModal() {
         let openModal = null;
@@ -207,7 +213,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick }
 })();
 
 export default Handler;
