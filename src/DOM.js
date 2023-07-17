@@ -50,13 +50,16 @@ const DOM = (() => {
     function showModal(modal, title = "", description = "", date = "", priority = "", complete = "", project = "") {
         modal.element.style.display = "block";
 
+        // captialize priority status to be displayed to screen
+        priority = priority.charAt(0).toUpperCase() + priority.slice(1);
+
         // modify textContent if todo info modal clicked
         if (modal === Modals.todoInfoModal) {
             modal.titleField.textContent = title;
             modal.descField.textContent = description;
             modal.dueDateField.textContent = date;
             modal.priorityField.textContent = priority;
-            modal.completeField.textContent = complete;
+            modal.completeField.textContent = (complete) ? "Yes" : "No";
             modal.projectField.textContent = project;
         }
 
