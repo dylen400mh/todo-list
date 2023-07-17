@@ -4,8 +4,7 @@ import Project from "./Project.js";
 import Handler from "./Handler.js";
 import DOM from "./DOM.js";
 
-DOM.displayProjects();
-DOM.displayTodos();
+DOM.updateDisplay();
 
 
 

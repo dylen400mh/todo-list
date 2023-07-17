@@ -207,7 +207,7 @@ img:hover {
 
 #new-project-modal,
 #edit-project-modal,
-#new-todo-modal {
+#new-todo-modal, #edit-todo-modal {
     display: none;
 }
 

@@ -20,7 +20,16 @@ const Modals = (() => {
         errorText: document.querySelector("#new-todo-modal .error-text"),
     }
 
-    return { newProjectModal, editProjectModal, newTodoModal };
+    const editTodoModal = {
+        element: document.querySelector("#edit-todo-modal"),
+        titleField: document.querySelector("#edit-todo-modal .todo-title"),
+        descField: document.querySelector("#edit-todo-modal .todo-description"),
+        dueDateField: document.querySelector("#edit-todo-modal .todo-date"),
+        priorityField: document.querySelector("#edit-todo-modal .todo-priority"),
+        errorText: document.querySelector("#edit-todo-modal .error-text"),
+    }
+
+    return { newProjectModal, editProjectModal, newTodoModal, editTodoModal };
 })();
 
 

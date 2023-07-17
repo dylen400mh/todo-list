@@ -83,7 +83,6 @@
                         <span class="required">*</span>
                     </label>
                     <input type="text" id="project-title" name="project-title" class="project-title">
-                    <!--find a way to populate value-->
                     <span class="error-text">Please fill out this field</span>
                     <div class="action-buttons">
                         <button class="cancel-button">Cancel</button>
@@ -96,6 +95,36 @@
             <div id="new-todo-modal">
                 <div class="modal-title">
                     <span>New To-Do</span>
+                </div>
+                <div class="modal-content">
+                    <label for="todo-title">
+                        Title
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" id="todo-title" name="todo-title" class="todo-title">
+                    <span class="error-text">Please fill out this field</span>
+                    <label for="todo-description">Description</label>
+                    <input type="text" id="todo-description" name="todo-description" class="todo-description">
+                    <label for="todo-date">Due Date</label>
+                    <input type="date" id="todo-date" name="todo-date" class="todo-date">
+                    <label for="todo-priority">Priority</label>
+                    <select name="todo-priority" id="todo-priority" class="todo-priority">
+                        <option value="none">Select Priority</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <div class="action-buttons">
+                        <button class="cancel-button">Cancel</button>
+                        <button class="confirm-button">Confirm</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--EDIT TODO MODAL-->
+            <div id="edit-todo-modal">
+                <div class="modal-title">
+                    <span>Edit To-Do</span>
                 </div>
                 <div class="modal-content">
                     <label for="todo-title">

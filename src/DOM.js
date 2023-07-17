@@ -7,25 +7,44 @@ const DOM = (() => {
     const projectsContainer = document.querySelector(".projects");
     const todosContainer = document.querySelector(".todos");
 
-    // display corresponding modal based on button click
-    function displayModal(modalClicked, projectIndex = null) {
+    // display corresponding modal based on button click (DOESNT APPLY TO EVERY PROJECT)
+    function displayModal(modalClicked, projectIndex = null, todoIndex = null) {
         modal.style.display = "block"; //modal general display
 
         // new modals
         if (modalClicked === Modals.newProjectModal || modalClicked === Modals.newTodoModal) {
             showModal(modalClicked);
         }
-        // edit modals
-        else if (modalClicked === Modals.editProjectModal) {
-            const projectTitle = Info.projects[projectIndex].title;
-            showModal(modalClicked, projectTitle);
+        // edit todo modal
+        if (modalClicked === Modals.editTodoModal) {
+
+            const todo = Info.projects[projectIndex].todos[todoIndex]
+
+            const title = todo.title;
+            const description = todo.description;
+            const date = todo.date;
+            const priority = todo.priority;
+
+            showModal(modalClicked, title, description, date, priority);
+        }
+        //edit project modal
+        if (modalClicked === Modals.editProjectModal) {
+            const title = Info.projects[projectIndex].title;
+            showModal(modalClicked, title);
         }
     }
 
-    function showModal(modal, title = "") {
+    function showModal(modal, title = "", description = "", date = "", priority = "") {
         modal.element.style.display = "block";
         modal.titleField.value = title;
         modal.titleField.focus();
+
+        // set additional fields for todo modal
+        if (modal === Modals.editTodoModal) {
+            modal.descField.value = description;
+            modal.dueDateField.value = date;
+            modal.priorityField.value = priority;
+        }
     }
 
     function resetModalFields(modal) {
@@ -77,16 +96,25 @@ const DOM = (() => {
             editButton.src = "../src/images/icons8-edit-30.png";
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-project-button");
-            editButton.addEventListener("click", Handler.handleEditButtonClick);
+            editButton.addEventListener("click", (e) => {
+                Handler.handleEditButtonClick(e, "project")
+            });
 
-            const deleteButton = document.createElement("img");
-            deleteButton.src = "../src/images/icons8-delete-24.png";
-            deleteButton.classList.add("delete-button");
-            deleteButton.classList.add("delete-project-button");
-            deleteButton.addEventListener("click", Handler.handleDeleteButtonClick)
+            // Only add a delete button if there is more than one project. We always want at least one project.
+            if (Info.projects.length > 1) {
+                const deleteButton = document.createElement("img");
+                deleteButton.src = "../src/images/icons8-delete-24.png";
+                deleteButton.classList.add("delete-button");
+                deleteButton.classList.add("delete-project-button");
+                deleteButton.addEventListener("click", (e) => {
+                    Handler.handleDeleteButtonClick(e, "project")
+                })
 
-            // add each button to action buttons div
-            actionButtons.append(editButton, deleteButton);
+                // add each button to action buttons div
+                actionButtons.append(editButton, deleteButton);
+            } else {
+                actionButtons.appendChild(editButton);
+            }
 
             // add title + buttons to project container
             projectContainer.append(projectTitle, actionButtons);
@@ -138,13 +166,19 @@ const DOM = (() => {
             editButton.src = "../src/images/icons8-edit-30.png";
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-todo-button");
-            editButton.addEventListener("click", Handler.handleEditButtonClick); //MAYBE CHANGE THIS
+            editButton.addEventListener("click", (e) => {
+                e.stopPropagation(); // prevents todo from being toggled complete
+                Handler.handleEditButtonClick(e, "todo");
+            });
 
             const deleteButton = document.createElement("img");
             deleteButton.src = "../src/images/icons8-delete-24.png";
             deleteButton.classList.add("delete-button");
             deleteButton.classList.add("delete-todo-button");
-            deleteButton.addEventListener("click", Handler.handleDeleteButtonClick) //MAYBE CHANGE THIS
+            deleteButton.addEventListener("click", (e) => {
+                e.stopPropagation(); // prevents todo from being toggled complete
+                Handler.handleDeleteButtonClick(e, "todo");
+            })
 
             // add each button to action buttons div
             actionButtons.append(editButton, deleteButton);
@@ -177,7 +211,13 @@ const DOM = (() => {
         }
     }
 
-    return { displayModal, closeModal, displayError, displayProjects, displayTodos };
+    // update display
+    function updateDisplay() {
+        displayProjects();
+        displayTodos();
+    }
+
+    return { displayModal, closeModal, displayError, updateDisplay };
 })();
 
 export default DOM;
