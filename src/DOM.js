@@ -276,12 +276,6 @@ const DOM = (() => {
         projectContainer.classList.add("selected");
     }
 
-    // update selected style?????????
-    function updateSelectedStyle(e) {
-        removeSelectedStyle();
-        addSelectedStyle(e);
-    }
-
     return { displayModal, closeModal, displayError, updateDisplay };
 })();
 
