@@ -184,7 +184,9 @@ const DOM = (() => {
         // clear exisiting display
         clearTodos();
 
-        const allTodos = Info.getAllTodos();
+        // get all todos filter
+        const allTodosFilter = Info.filters.filter(filter => filter.title === "All")[0];
+        const allTodos = allTodosFilter.todos;
 
         for (let i = 0; i < allTodos.length; i++) {
             const todoContainer = document.createElement("div");
