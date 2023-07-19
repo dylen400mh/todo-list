@@ -50,11 +50,12 @@ const DOM = (() => {
     function showModal(modal, title = "", description = "", date = "", priority = "", complete = "", project = "") {
         modal.element.style.display = "block";
 
-        // captialize priority status to be displayed to screen
-        priority = priority.charAt(0).toUpperCase() + priority.slice(1);
-
         // modify textContent if todo info modal clicked
         if (modal === Modals.todoInfoModal) {
+
+            // captialize priority status to be displayed to screen
+            priority = priority.charAt(0).toUpperCase() + priority.slice(1);
+
             modal.titleField.textContent = title;
             modal.descField.textContent = description;
             modal.dueDateField.textContent = date;
@@ -72,7 +73,9 @@ const DOM = (() => {
             if (modal === Modals.editTodoModal) {
                 modal.descField.value = description;
                 modal.dueDateField.value = date;
-                modal.priorityField.value = priority;
+
+                const option = modal.priorityField.querySelector("option[value=" + priority + "]");
+                option.selected = true
             }
         }
     }
@@ -86,7 +89,7 @@ const DOM = (() => {
         if (modal === Modals.newTodoModal) {
             modal.descField.value = "";
             modal.dueDateField.value = "";
-            modal.priorityField.value = "none";
+            modal.priorityField.selectedIndex = 0;
         }
     }
 
