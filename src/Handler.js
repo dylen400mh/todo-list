@@ -10,7 +10,6 @@ const Handler = (() => {
     const cancelModalButtons = document.querySelectorAll(".cancel-button");
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
     const newTodoButton = document.querySelector(".new-todo-button");
-    const projectsContainer = document.querySelector(".projects");
 
     // global variable
     let index;
@@ -116,13 +115,33 @@ const Handler = (() => {
 
     // unselects a project
     function unselectProject() {
-        const selectedProject = Info.projects.filter(project => project.selected)[0];
-        selectedProject.selected = false;
+
+        //check for selected filters
+        const selectedFilters = Info.filters.filter(filter => filter.selected);
+        if (selectedFilters.length) {
+            selectedFilters[0].selected = false
+        }
+
+        // else check for selected projects
+        else {
+            const selectedProjects = Info.projects.filter(project => project.selected);
+            if (selectedProjects.length) {
+                selectedProjects[0].selected = false
+            }
+        }
     }
 
     // selects a project 
     function selectProject(project) {
         project.selected = true;
+    }
+
+    // returns filter object based on title
+    function getFilterObject(e) {
+        const container = e.target.closest(".sidebar-container")
+        const title = container.getAttribute("title");
+
+        return Info.filters.filter(filter => filter.title === title)[0];
     }
 
     // handle edit button click (FIX THIS TO BE ANY PROJECT)
@@ -177,6 +196,23 @@ const Handler = (() => {
         // select new project
         selectProject(project);
 
+        // if there are no selected filters, select 'all' filter
+        setDefaultFilter();
+
+        // update displays
+        DOM.updateDisplay();
+    }
+
+    // handles filter click
+    function handleFilterClick(e) {
+        const filter = getFilterObject(e);
+
+        // unselect current filter
+        unselectProject()
+
+        // select new filter
+        selectProject(filter);
+
         // update displays
         DOM.updateDisplay();
     }
@@ -197,6 +233,14 @@ const Handler = (() => {
         }
 
         return openModal;
+    }
+
+    // if there are no selected filters, select 'all' filter
+    function setDefaultFilter() {
+        if (Info.projects.filter(project => project.selected).length === 0 && Info.filters.filter(filter => filter.selected).length === 0) {
+            const allTodosFilter = Info.filters.filter(filter => filter.title === "All")[0];
+            allTodosFilter.selected = true;
+        }
     }
 
     // display new project modal
@@ -235,7 +279,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleProjectClick }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleProjectClick, handleFilterClick, setDefaultFilter }
 })();
 
 export default Handler;

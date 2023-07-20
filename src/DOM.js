@@ -6,6 +6,7 @@ const DOM = (() => {
     const modal = document.querySelector(".modal");
     const projectsContainer = document.querySelector(".projects");
     const todosContainer = document.querySelector(".todos");
+    const filtersContainer = document.querySelector(".filters");
 
     // display corresponding modal based on button click (DOESNT APPLY TO EVERY PROJECT)
     function displayModal(modalClicked, projectIndex = null, todoIndex = null) {
@@ -109,6 +110,37 @@ const DOM = (() => {
     function clearProjects() {
         while (projectsContainer.firstChild) {
             projectsContainer.removeChild(projectsContainer.firstChild);
+        }
+    }
+
+    function clearFilters() {
+        while (filtersContainer.firstChild) {
+            filtersContainer.removeChild(filtersContainer.firstChild);
+        }
+    }
+
+    function displayFilters() {
+        //clear filters from display
+        clearFilters();
+
+        for (let i = 0; i < Info.filters.length; i++) {
+            const filterContainer = document.createElement("div");
+            filterContainer.classList.add("sidebar-container");
+            filterContainer.setAttribute("title", Info.filters[i].title);
+            filterContainer.addEventListener("click", (e) => {
+                Handler.handleFilterClick(e);
+            })
+
+            // if this filter is selected, add the selected style
+            if (Info.filters[i].selected) {
+                addSelectedStyle(filterContainer);
+            }
+
+            const filterTitle = document.createElement("span");
+            filterTitle.textContent = Info.filters[i].title;
+
+            filterContainer.appendChild(filterTitle);
+            filtersContainer.appendChild(filterContainer);
         }
     }
 
@@ -270,15 +302,20 @@ const DOM = (() => {
     }
 
     // update display
-    function updateDisplay(e) {
+    function updateDisplay() {
+
+        // if no project/filter is selected, select 'all' filter
+        Handler.setDefaultFilter();
+
+        displayFilters();
         displayProjects();
         displayTodos();
     }
 
-    // select project by adding the selected style
-    function addSelectedStyle(projectContainer) {
+    // select filter by adding the selected style
+    function addSelectedStyle(container) {
         // add selected property to new element
-        projectContainer.classList.add("selected");
+        container.classList.add("selected");
     }
 
     return { displayModal, closeModal, displayError, updateDisplay };
