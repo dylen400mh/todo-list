@@ -20,11 +20,6 @@ const Handler = (() => {
         Info.projects.push(project);
     }
 
-    // return project at a specific index
-    function getProject(index) {
-        return Info.projects[index];
-    }
-
     // edit project by changing its title and updating display
     function editProject(project, title) {
         project.title = title;
@@ -89,7 +84,7 @@ const Handler = (() => {
             }
             // edit existing project
             else if (modal === Modals.editProjectModal) {
-                editProject(getProject(index), title);
+                editProject(getFilterObject(e), title);
             }
             // create new todo
             else if (modal === Modals.newTodoModal) {
@@ -97,7 +92,7 @@ const Handler = (() => {
             }
             // edit existing todo
             else if (modal === Modals.editTodoModal) {
-                editTodo(getProject(0).todos[index], title, description, dueDate, priority)
+                editTodo(getSelectedFilter().todos[index], title, description, dueDate, priority)
             }
 
             DOM.closeModal(modal);
@@ -137,11 +132,11 @@ const Handler = (() => {
     function handleEditButtonClick(e, object) {
         if (object === "todo") {
             index = getTodoIndex(e);
-            DOM.displayModal(Modals.editTodoModal, index);
+            DOM.displayModal(e, Modals.editTodoModal, index);
         }
 
         if (object === "project") {
-            DOM.displayModal(Modals.editProjectModal);
+            DOM.displayModal(e, Modals.editProjectModal);
         }
     }
 
@@ -169,7 +164,7 @@ const Handler = (() => {
     // handles todo info button click (MAKE WORK FOR ANY PROJECT)
     function handleTodoInfoClick(e) {
         index = getTodoIndex(e);
-        DOM.displayModal(Modals.todoInfoModal, index)
+        DOM.displayModal(e, Modals.todoInfoModal, index)
     }
 
     // handles filter click
@@ -213,13 +208,13 @@ const Handler = (() => {
     }
 
     // display new project modal
-    newProjectButton.addEventListener("click", () => {
-        DOM.displayModal(Modals.newProjectModal);
+    newProjectButton.addEventListener("click", (e) => {
+        DOM.displayModal(e, Modals.newProjectModal);
     })
 
     // display new todo modal
-    newTodoButton.addEventListener("click", () => {
-        DOM.displayModal(Modals.newTodoModal);
+    newTodoButton.addEventListener("click", (e) => {
+        DOM.displayModal(e, Modals.newTodoModal);
     })
 
     // close modal
@@ -248,7 +243,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, setDefaultFilter, getSelectedFilter }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, setDefaultFilter, getSelectedFilter, getFilterObject }
 })();
 
 export default Handler;

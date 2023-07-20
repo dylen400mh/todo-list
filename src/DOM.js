@@ -9,7 +9,7 @@ const DOM = (() => {
     const filtersContainer = document.querySelector(".filters");
 
     // display corresponding modal based on button click (DOESNT APPLY TO EVERY PROJECT)
-    function displayModal(modalClicked, todoIndex = null) {
+    function displayModal(e, modalClicked, todoIndex = null) {
         modal.style.display = "block"; //modal general display
 
         // new modals
@@ -43,7 +43,7 @@ const DOM = (() => {
         }
         //edit project modal
         if (modalClicked === Modals.editProjectModal) {
-            const title = Handler.getSelectedFilter().title;
+            const title = Handler.getFilterObject(e).title;
             showModal(modalClicked, title);
         }
     }
