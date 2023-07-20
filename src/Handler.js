@@ -115,19 +115,9 @@ const Handler = (() => {
 
     // unselects a project
     function unselectProject() {
-
         //check for selected filters
-        const selectedFilters = Info.filters.filter(filter => filter.selected);
-        if (selectedFilters.length) {
-            selectedFilters[0].selected = false
-        }
-
-        // else check for selected projects
-        else {
-            const selectedProjects = Info.projects.filter(project => project.selected);
-            if (selectedProjects.length) {
-                selectedProjects[0].selected = false
-            }
+        if (getSelectedFilter()) {
+            getSelectedFilter().selected = false
         }
     }
 
@@ -142,6 +132,11 @@ const Handler = (() => {
         const title = container.getAttribute("title");
 
         return Info.filters.filter(filter => filter.title === title)[0];
+    }
+
+    // returns selected project/filter - used to manipulate its todos/display
+    function getSelectedFilter() {
+        return Info.getAllFilters().filter(filter => filter.selected)[0]
     }
 
     // handle edit button click (FIX THIS TO BE ANY PROJECT)
@@ -205,6 +200,7 @@ const Handler = (() => {
 
     // handles filter click
     function handleFilterClick(e) {
+        console.log(getFilterObject(e))
         const filter = getFilterObject(e);
 
         // unselect current filter
