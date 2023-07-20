@@ -20,11 +20,6 @@ const Handler = (() => {
         Info.projects.push(project);
     }
 
-    // get project index
-    function getProjectIndex(e) {
-        return e.target.closest(".sidebar-container").getAttribute("index");
-    }
-
     // return project at a specific index
     function getProject(index) {
         return Info.projects[index];
@@ -36,15 +31,14 @@ const Handler = (() => {
     }
 
     // delete project by splicing projects array at project's index
-    function deleteProject(projectIndex) {
-        Info.projects.splice(projectIndex, 1);
+    function deleteProject(selectedProject) {
+        Info.projects = Info.projects.filter(project => project !== selectedProject);
     }
 
     // create new todo
     function addTodo(title, description, dueDate, priority) {
         const todo = new Todo(title, description, dueDate, priority);
-        const currentProject = Info.projects[0]; //GENERALIZE THIS LATER TO BE CHOSEN PROJECT
-        currentProject.todos.push(todo);
+        getSelectedFilter().todos.push(todo);
     }
 
     // get todo index
@@ -52,14 +46,14 @@ const Handler = (() => {
         return e.target.closest(".content-container").getAttribute("index");
     }
 
-    // get todo object (CHANGE LATER TO APPLY TO ANY PROJECT)
+    // get todo object
     function getTodo(index) {
-        return Info.projects[0].todos[index];
+        return getSelectedFilter().todos[index];
     }
 
-    // delete todo from project - ADJUST FOR ALL PROJECTS
-    function deleteTodo(projectIndex, todoIndex) {
-        Info.projects[projectIndex].todos.splice(todoIndex, 1);
+    // delete todo from project
+    function deleteTodo(index) {
+        getSelectedFilter().todos.splice(index, 1);
     }
 
     function editTodo(todo, title, description, date, priority) {
@@ -69,7 +63,7 @@ const Handler = (() => {
         todo.priority = priority;
     }
 
-    // // toggle complete/incomplete status todo (CHANGE TO APPLY TO ANY PROJECT)
+    // // toggle complete/incomplete status todo
     function toggleComplete(index) {
         const todo = getTodo(index);
         todo.complete = (todo.complete) ? false : true;
@@ -131,7 +125,7 @@ const Handler = (() => {
         const container = e.target.closest(".sidebar-container")
         const title = container.getAttribute("title");
 
-        return Info.filters.filter(filter => filter.title === title)[0];
+        return Info.getAllFilters().filter(filter => filter.title === title)[0];
     }
 
     // returns selected project/filter - used to manipulate its todos/display
@@ -139,16 +133,15 @@ const Handler = (() => {
         return Info.getAllFilters().filter(filter => filter.selected)[0]
     }
 
-    // handle edit button click (FIX THIS TO BE ANY PROJECT)
+    // handle edit button click
     function handleEditButtonClick(e, object) {
         if (object === "todo") {
             index = getTodoIndex(e);
-            DOM.displayModal(Modals.editTodoModal, 0, index);
+            DOM.displayModal(Modals.editTodoModal, index);
         }
 
         if (object === "project") {
-            index = getProjectIndex(e);
-            DOM.displayModal(Modals.editProjectModal, index);
+            DOM.displayModal(Modals.editProjectModal);
         }
     }
 
@@ -157,12 +150,13 @@ const Handler = (() => {
         // get index based on type of object (todo or project)
         if (object === "todo") {
             index = getTodoIndex(e);
-            deleteTodo(0, index); // ADJUST FOR ALL PROJECTS (0 is default)
+            deleteTodo(index);
         }
 
         if (object === "project") {
-            index = getProjectIndex(e);
-            deleteProject(index);
+            const projectToRemove = Info.projects.filter(filter => filter === getFilterObject(e))[0];
+            console.log(projectToRemove)
+            deleteProject(projectToRemove);
         }
 
         DOM.updateDisplay()
@@ -177,30 +171,11 @@ const Handler = (() => {
     // handles todo info button click (MAKE WORK FOR ANY PROJECT)
     function handleTodoInfoClick(e) {
         index = getTodoIndex(e);
-        DOM.displayModal(Modals.todoInfoModal, 0, index)
-    }
-
-    // handles project click
-    function handleProjectClick(e) {
-        index = getProjectIndex(e);
-        const project = Info.projects[index];
-
-        // unselect current project
-        unselectProject()
-
-        // select new project
-        selectProject(project);
-
-        // if there are no selected filters, select 'all' filter
-        setDefaultFilter();
-
-        // update displays
-        DOM.updateDisplay();
+        DOM.displayModal(Modals.todoInfoModal, index)
     }
 
     // handles filter click
     function handleFilterClick(e) {
-        console.log(getFilterObject(e))
         const filter = getFilterObject(e);
 
         // unselect current filter
@@ -275,7 +250,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleProjectClick, handleFilterClick, setDefaultFilter }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, setDefaultFilter, getSelectedFilter }
 })();
 
 export default Handler;

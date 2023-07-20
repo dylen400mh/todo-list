@@ -9,7 +9,7 @@ const DOM = (() => {
     const filtersContainer = document.querySelector(".filters");
 
     // display corresponding modal based on button click (DOESNT APPLY TO EVERY PROJECT)
-    function displayModal(modalClicked, projectIndex = null, todoIndex = null) {
+    function displayModal(modalClicked, todoIndex = null) {
         modal.style.display = "block"; //modal general display
 
         // new modals
@@ -19,8 +19,8 @@ const DOM = (() => {
         // todo-related modals
         if (modalClicked === Modals.editTodoModal || modalClicked === Modals.todoInfoModal) {
 
-            const project = Info.projects[projectIndex];
-            const todo = project.todos[todoIndex]
+            const project = Handler.getSelectedFilter();
+            const todo = project.todos[todoIndex];
 
             const title = todo.title;
             const description = todo.description;
@@ -43,7 +43,7 @@ const DOM = (() => {
         }
         //edit project modal
         if (modalClicked === Modals.editProjectModal) {
-            const title = Info.projects[projectIndex].title;
+            const title = Handler.getSelectedFilter().title;
             showModal(modalClicked, title);
         }
     }
@@ -153,10 +153,10 @@ const DOM = (() => {
         for (let i = 0; i < Info.projects.length; i++) {
             const projectContainer = document.createElement("div");
             projectContainer.classList.add("sidebar-container");
-            projectContainer.setAttribute("index", i);
+            projectContainer.setAttribute("title", Info.projects[i].title);
             projectContainer.addEventListener("click", (e) => {
                 e.stopPropagation()
-                Handler.handleProjectClick(e);
+                Handler.handleFilterClick(e);
             });
 
             // if this project is selected, add the selected style
