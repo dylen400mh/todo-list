@@ -154,9 +154,7 @@ const Handler = (() => {
         }
 
         if (object === "project") {
-            const projectToRemove = Info.projects.filter(filter => filter === getFilterObject(e))[0];
-            console.log(projectToRemove)
-            deleteProject(projectToRemove);
+            deleteProject(getFilterObject(e));
         }
 
         DOM.updateDisplay()
