@@ -233,7 +233,7 @@ const Handler = (() => {
 
     // if there are no selected filters, select 'all' filter
     function setDefaultFilter() {
-        if (Info.projects.filter(project => project.selected).length === 0 && Info.filters.filter(filter => filter.selected).length === 0) {
+        if (!getSelectedFilter()) {
             const allTodosFilter = Info.filters.filter(filter => filter.title === "All")[0];
             allTodosFilter.selected = true;
         }
