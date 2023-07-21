@@ -11,8 +11,9 @@ const Handler = (() => {
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
     const newTodoButton = document.querySelector(".new-todo-button");
 
-    // global variable
+    // create closures to store the selected filter or index for editing purposes
     let index;
+    let selectedFilter;
 
     // create project and add to projects array
     function addProject(title) {
@@ -27,7 +28,8 @@ const Handler = (() => {
 
     // delete project by splicing projects array at project's index
     function deleteProject(selectedProject) {
-        Info.projects = Info.projects.filter(project => project !== selectedProject);
+        const projectIndex = Info.projects.findIndex(project => project === selectedProject);
+        Info.projects.splice(projectIndex, 1);
     }
 
     // create new todo
@@ -84,7 +86,7 @@ const Handler = (() => {
             }
             // edit existing project
             else if (modal === Modals.editProjectModal) {
-                editProject(getFilterObject(e), title);
+                editProject(selectedFilter, title);
             }
             // create new todo
             else if (modal === Modals.newTodoModal) {
@@ -117,7 +119,7 @@ const Handler = (() => {
 
     // returns filter object based on title
     function getFilterObject(e) {
-        const container = e.target.closest(".sidebar-container")
+        const container = e.target.closest(".sidebar-container");
         const title = container.getAttribute("title");
 
         return Info.getAllFilters().filter(filter => filter.title === title)[0];
@@ -136,11 +138,12 @@ const Handler = (() => {
         }
 
         if (object === "project") {
+            selectedFilter = getFilterObject(e);
             DOM.displayModal(e, Modals.editProjectModal);
         }
     }
 
-    // handle delete button click
+    // handle delete button click (if i click delete the project isn't removed from array)
     function handleDeleteButtonClick(e, object) {
         // get index based on type of object (todo or project)
         if (object === "todo") {
@@ -169,13 +172,13 @@ const Handler = (() => {
 
     // handles filter click
     function handleFilterClick(e) {
-        const filter = getFilterObject(e);
+        selectedFilter = getFilterObject(e);
 
         // unselect current filter
         unselectProject()
 
         // select new filter
-        selectProject(filter);
+        selectProject(selectedFilter);
 
         // update displays
         DOM.updateDisplay();
@@ -233,6 +236,7 @@ const Handler = (() => {
 
     // validate form if user clicks the confirm button OR hits enter when the modal is open
     confirmModalButtons.forEach(button => {
+
         button.addEventListener("click", () => {
             validateForm(getOpenModal());
         });
