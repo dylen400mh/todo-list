@@ -83,37 +83,38 @@ const Handler = (() => {
             priority = modal.priorityField.value;
         }
 
-        console.log(checkExistingTitles(title))
         // if a title was entered perform the appropriate action, else display error message
-        if (title !== "" && !checkExistingTitles(title)) {
-            // add new project
-            if (modal === Modals.newProjectModal) {
-                addProject(title);
-            }
-            // edit existing project
-            else if (modal === Modals.editProjectModal) {
-                editProject(selectedFilter, title);
-            }
-            // create new todo
-            else if (modal === Modals.newTodoModal) {
-                addTodo(title, description, dueDate, priority);
-            }
-            // edit existing todo
-            else if (modal === Modals.editTodoModal) {
-                editTodo(getSelectedFilter().todos[index], title, description, dueDate, priority)
+        if (title !== "") {
+            // if project modal, check if the project name is taken
+            if ((modal === Modals.newProjectModal || modal === Modals.editProjectModal) && checkExistingTitles(title)) {
+                DOM.displayTakenError(modal);
+            } else {
+                // add new project
+                if (modal === Modals.newProjectModal) {
+                    addProject(title);
+                }
+                // edit existing project
+                else if (modal === Modals.editProjectModal) {
+                    editProject(selectedFilter, title);
+                }
+                // create new todo
+                else if (modal === Modals.newTodoModal) {
+                    addTodo(title, description, dueDate, priority);
+                }
+                // edit existing todo
+                else if (modal === Modals.editTodoModal) {
+                    editTodo(getSelectedFilter().todos[index], title, description, dueDate, priority)
+                }
+
+                DOM.closeModal(modal);
+                DOM.updateDisplay();
             }
 
-            DOM.closeModal(modal);
-            DOM.updateDisplay();
-        } 
-        // if title field empty
-        else if (title === "") {
+
+        } else {
             DOM.displayEmptyError(modal);
         }
-        // if title take
-        else if (checkExistingTitles(title)) {
-            DOM.displayTakenError(modal);
-        }
+
 
     }
 
@@ -155,7 +156,7 @@ const Handler = (() => {
         }
     }
 
-    // handle delete button click (if i click delete the project isn't removed from array)
+    // handle delete button click
     function handleDeleteButtonClick(e, object) {
         // get index based on type of object (todo or project)
         if (object === "todo") {
@@ -176,7 +177,7 @@ const Handler = (() => {
         DOM.updateDisplay();
     }
 
-    // handles todo info button click (MAKE WORK FOR ANY PROJECT)
+    // handles todo info button click
     function handleTodoInfoClick(e) {
         index = getTodoIndex(e);
         DOM.displayModal(e, Modals.todoInfoModal, index)

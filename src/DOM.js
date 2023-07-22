@@ -8,7 +8,7 @@ const DOM = (() => {
     const todosContainer = document.querySelector(".todos");
     const filtersContainer = document.querySelector(".filters");
 
-    // display corresponding modal based on button click (DOESNT APPLY TO EVERY PROJECT)
+    // display corresponding modal based on button click
     function displayModal(e, modalClicked, todoIndex = null) {
         modal.style.display = "block"; //modal general display
 
@@ -109,11 +109,21 @@ const DOM = (() => {
     }
 
     function displayEmptyError(modal) {
+        hideTakenError(modal);
         modal.emptyErrorText.style.display = "block";
     }
 
     function displayTakenError(modal) {
+        hideEmptyError(modal);
         modal.takenErrorText.style.display = "block";
+    }
+
+    function hideTakenError(modal) {
+        modal.takenErrorText.style.display = "none";
+    }
+
+    function hideEmptyError(modal) {
+        modal.emptyErrorText.style.display = "none";
     }
 
     function clearProjects() {
@@ -225,11 +235,13 @@ const DOM = (() => {
         // clear exisiting display
         clearTodos();
 
-        // get all todos filter
-        const allTodosFilter = Info.filters.find(filter => filter.title === "All");
-        const allTodos = allTodosFilter.todos;
+        // get selected filter
+        const filter = Handler.getSelectedFilter();
+        const todos = filter.todos;
+        
+        console.log(Info.projects)
 
-        for (let i = 0; i < allTodos.length; i++) {
+        for (let i = 0; i < todos.length; i++) {
             const todoContainer = document.createElement("div");
             todoContainer.classList.add("content-container");
             todoContainer.setAttribute("index", i);
@@ -241,13 +253,13 @@ const DOM = (() => {
             const checkbox = document.createElement("div");
             checkbox.classList.add("checkbox")
             const todoTitle = document.createElement("span");
-            todoTitle.textContent = allTodos[i].title;
+            todoTitle.textContent = todos[i].title;
             const dueDate = document.createElement("div");
             dueDate.classList.add("date");
-            dueDate.textContent = allTodos[i].date;
+            dueDate.textContent = todos[i].date;
 
             // add checkbox and todo title styles then add to info
-            addTodoStyles(allTodos[i], checkbox, todoTitle);
+            addTodoStyles(todos[i], checkbox, todoTitle);
             todoInfo.append(checkbox, todoTitle, dueDate);
 
             const actionButtons = document.createElement("div");
