@@ -24,7 +24,8 @@ const Info = (() => {
 
     // return array that contains all projects and filters
     const getAllFilters = () => {
-        let array = [];
+        updateFilters();
+        let array = []
 
         for (let filter of filters) {
             array.push(filter);
@@ -53,6 +54,16 @@ const Info = (() => {
         selected: false
     }];
 
+    // updates filters by calling functions to get todos
+    const updateFilters = () => {
+        const allFilter = filters.find(filter => filter.title === "All");
+        const importantFilter = filters.find(filter => filter.title === "Important");
+        const completeFilter = filters.find(filter => filter.title === "Completed");
+
+        allFilter.todos = getAllTodos();
+        importantFilter.todos = getImportantTodos();
+        completeFilter.todos = getCompleteTodos();
+    }
 
     return { projects, filters, getAllFilters };
 })();

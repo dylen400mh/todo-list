@@ -239,7 +239,7 @@ const DOM = (() => {
         const filter = Handler.getSelectedFilter();
         const todos = filter.todos;
         
-        console.log(Info.projects)
+        console.log(filter)
 
         for (let i = 0; i < todos.length; i++) {
             const todoContainer = document.createElement("div");
