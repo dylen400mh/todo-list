@@ -9,7 +9,6 @@ const Handler = (() => {
     const modal = document.querySelector(".modal");
     const cancelModalButtons = document.querySelectorAll(".cancel-button");
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
-    const newTodoButton = document.querySelector(".new-todo-button");
 
     // create closures to store the selected filter or index for editing purposes
     let index;
@@ -223,14 +222,14 @@ const Handler = (() => {
         }
     }
 
+    // handles new todo button click
+    function HandleNewTodoClick(e) {
+        DOM.displayModal(e, Modals.newTodoModal);
+    }
+
     // display new project modal
     newProjectButton.addEventListener("click", (e) => {
         DOM.displayModal(e, Modals.newProjectModal);
-    })
-
-    // display new todo modal
-    newTodoButton.addEventListener("click", (e) => {
-        DOM.displayModal(e, Modals.newTodoModal);
     })
 
     // close modal
@@ -260,7 +259,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, setDefaultFilter, getSelectedFilter, getFilterObject }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, HandleNewTodoClick, setDefaultFilter, getSelectedFilter, getFilterObject }
 })();
 
 export default Handler;

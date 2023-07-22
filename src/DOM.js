@@ -7,7 +7,8 @@ const DOM = (() => {
     const projectsContainer = document.querySelector(".projects");
     const todosContainer = document.querySelector(".todos");
     const filtersContainer = document.querySelector(".filters");
-    const todosTitle = document.querySelector(".todos-title > span");
+    const todosTitleContainer = document.querySelector(".todos-title");
+    const todosTitle = todosTitleContainer.querySelector("span");
 
     // display corresponding modal based on button click
     function displayModal(e, modalClicked, todoIndex = null) {
@@ -140,9 +141,6 @@ const DOM = (() => {
     }
 
     function displayFilters() {
-        //clear filters from display
-        clearFilters();
-
         for (let i = 0; i < Info.filters.length; i++) {
             const filterContainer = document.createElement("div");
             filterContainer.classList.add("sidebar-container");
@@ -165,10 +163,6 @@ const DOM = (() => {
     }
 
     function displayProjects() {
-
-        // clear existing projects from display
-        clearProjects();
-
         // add each project to page
         for (let i = 0; i < Info.projects.length; i++) {
             const projectContainer = document.createElement("div");
@@ -232,15 +226,35 @@ const DOM = (() => {
     }
 
     // dynamically updates filter/project title in content container
-    function updateContentTitle() {
+    function updateContentHeader() {
         todosTitle.textContent = Handler.getSelectedFilter().title;
+
+        // add the button if the selected filter is a project
+        if (Info.projects.includes(Handler.getSelectedFilter())) {
+            displayAddTodoButton();
+        }
     }
 
-    // display a project's todos (FOR NOW ITS JUST ALL OF THEM)
-    function displayTodos() {
-        // clear exisiting display
-        clearTodos();
+    // remove button from container (it will always be the last element)
+    function removeAddTodoButton() {
+        todosTitleContainer.removeChild(todosTitleContainer.lastChild);
+    }
 
+    // adds 'add todo' button to screen
+    function displayAddTodoButton() {
+        const addTodoButton = document.createElement("img");
+        addTodoButton.src = "../src/images/icons8-add-32.png";
+        addTodoButton.classList.add("add-button");
+        addTodoButton.classList.add("new-todo-button");
+        addTodoButton.addEventListener("click", (e) => {
+            Handler.HandleNewTodoClick(e);
+        });
+
+        todosTitleContainer.appendChild(addTodoButton);
+    }
+
+    // display a project's todos
+    function displayTodos() {
         // get selected filter
         const filter = Handler.getSelectedFilter();
         const todos = filter.todos;
@@ -326,13 +340,24 @@ const DOM = (() => {
         }
     }
 
+    // clears display
+    function clearDisplay() {
+
+        if (todosTitleContainer.childElementCount > 1) removeAddTodoButton();
+        clearFilters();
+        clearProjects();
+        clearTodos();
+    }
+
     // update display
     function updateDisplay() {
-
         // if no project/filter is selected, select 'all' filter
         Handler.setDefaultFilter();
 
-        updateContentTitle();
+        // clear display
+        clearDisplay();
+
+        updateContentHeader();
         displayFilters();
         displayProjects();
         displayTodos();
