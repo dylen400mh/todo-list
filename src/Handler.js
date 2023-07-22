@@ -121,13 +121,12 @@ const Handler = (() => {
     function getFilterObject(e) {
         const container = e.target.closest(".sidebar-container");
         const title = container.getAttribute("title");
-
-        return Info.getAllFilters().filter(filter => filter.title === title)[0];
+        return Info.getAllFilters().find(filter => filter.title === title);
     }
 
     // returns selected project/filter - used to manipulate its todos/display
     function getSelectedFilter() {
-        return Info.getAllFilters().filter(filter => filter.selected)[0]
+        return Info.getAllFilters().find(filter => filter.selected);
     }
 
     // handle edit button click
@@ -205,7 +204,7 @@ const Handler = (() => {
     // if there are no selected filters, select 'all' filter
     function setDefaultFilter() {
         if (!getSelectedFilter()) {
-            const allTodosFilter = Info.filters.filter(filter => filter.title === "All")[0];
+            const allTodosFilter = Info.filters.find(filter => filter.title === "All");
             allTodosFilter.selected = true;
         }
     }

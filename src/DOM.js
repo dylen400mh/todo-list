@@ -217,7 +217,7 @@ const DOM = (() => {
         clearTodos();
 
         // get all todos filter
-        const allTodosFilter = Info.filters.filter(filter => filter.title === "All")[0];
+        const allTodosFilter = Info.filters.find(filter => filter.title === "All");
         const allTodos = allTodosFilter.todos;
 
         for (let i = 0; i < allTodos.length; i++) {

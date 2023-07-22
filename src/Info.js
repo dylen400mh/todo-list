@@ -24,8 +24,6 @@ const Info = (() => {
 
     // return array that contains all projects and filters
     const getAllFilters = () => {
-        console.log("info.projects")
-        console.log(projects)
         let array = [];
 
         for (let filter of filters) {
