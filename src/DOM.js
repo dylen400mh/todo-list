@@ -7,6 +7,7 @@ const DOM = (() => {
     const projectsContainer = document.querySelector(".projects");
     const todosContainer = document.querySelector(".todos");
     const filtersContainer = document.querySelector(".filters");
+    const todosTitle = document.querySelector(".todos-title > span");
 
     // display corresponding modal based on button click
     function displayModal(e, modalClicked, todoIndex = null) {
@@ -230,6 +231,11 @@ const DOM = (() => {
         }
     }
 
+    // dynamically updates filter/project title in content container
+    function updateContentTitle() {
+        todosTitle.textContent = Handler.getSelectedFilter().title;
+    }
+
     // display a project's todos (FOR NOW ITS JUST ALL OF THEM)
     function displayTodos() {
         // clear exisiting display
@@ -238,8 +244,6 @@ const DOM = (() => {
         // get selected filter
         const filter = Handler.getSelectedFilter();
         const todos = filter.todos;
-        
-        console.log(filter)
 
         for (let i = 0; i < todos.length; i++) {
             const todoContainer = document.createElement("div");
@@ -328,6 +332,7 @@ const DOM = (() => {
         // if no project/filter is selected, select 'all' filter
         Handler.setDefaultFilter();
 
+        updateContentTitle();
         displayFilters();
         displayProjects();
         displayTodos();
