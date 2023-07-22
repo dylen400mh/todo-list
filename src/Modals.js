@@ -2,13 +2,15 @@ const Modals = (() => {
     const newProjectModal = {
         element: document.querySelector("#new-project-modal"),
         titleField: document.querySelector("#new-project-modal .project-title"),
-        errorText: document.querySelector("#new-project-modal .error-text"),
+        emptyErrorText: document.querySelector("#new-project-modal .empty"),
+        takenErrorText: document.querySelector("#new-project-modal .taken")
     }
 
     const editProjectModal = {
         element: document.querySelector("#edit-project-modal"),
         titleField: document.querySelector("#edit-project-modal .project-title"),
-        errorText: document.querySelector("#edit-project-modal .error-text"),
+        emptyErrorText: document.querySelector("#edit-project-modal .empty"),
+        takenErrorText: document.querySelector("#edit-project-modal .taken")
     }
 
     const newTodoModal = {
@@ -17,7 +19,7 @@ const Modals = (() => {
         descField: document.querySelector("#new-todo-modal .todo-description"),
         dueDateField: document.querySelector("#new-todo-modal .todo-date"),
         priorityField: document.querySelector("#new-todo-modal .todo-priority"),
-        errorText: document.querySelector("#new-todo-modal .error-text"),
+        emptyErrorText: document.querySelector("#new-todo-modal .empty"),
     }
 
     const editTodoModal = {
@@ -26,7 +28,7 @@ const Modals = (() => {
         descField: document.querySelector("#edit-todo-modal .todo-description"),
         dueDateField: document.querySelector("#edit-todo-modal .todo-date"),
         priorityField: document.querySelector("#edit-todo-modal .todo-priority"),
-        errorText: document.querySelector("#edit-todo-modal .error-text"),
+        emptyErrorText: document.querySelector("#edit-todo-modal .empty"),
     }
 
     const todoInfoModal = {

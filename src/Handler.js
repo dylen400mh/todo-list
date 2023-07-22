@@ -66,6 +66,11 @@ const Handler = (() => {
         todo.complete = (todo.complete) ? false : true;
     }
 
+    // returns boolean whether the title exists or not
+    function checkExistingTitles(title) {
+        return Info.getAllFilters().find(filter => filter.title === title);
+    }
+
     // validate form
     function validateForm(modal) {
         const title = modal.titleField.value; //get title from input box
@@ -78,8 +83,9 @@ const Handler = (() => {
             priority = modal.priorityField.value;
         }
 
+        console.log(checkExistingTitles(title))
         // if a title was entered perform the appropriate action, else display error message
-        if (title !== "") {
+        if (title !== "" && !checkExistingTitles(title)) {
             // add new project
             if (modal === Modals.newProjectModal) {
                 addProject(title);
@@ -99,9 +105,16 @@ const Handler = (() => {
 
             DOM.closeModal(modal);
             DOM.updateDisplay();
-        } else {
-            DOM.displayError(modal);
+        } 
+        // if title field empty
+        else if (title === "") {
+            DOM.displayEmptyError(modal);
         }
+        // if title take
+        else if (checkExistingTitles(title)) {
+            DOM.displayTakenError(modal);
+        }
+
     }
 
     // unselects a project

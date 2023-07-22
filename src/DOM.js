@@ -83,8 +83,13 @@ const DOM = (() => {
 
     // resets input fields / error messages
     function resetModalFields(modal) {
-        modal.errorText.style.display = "none";
+        modal.emptyErrorText.style.display = "none";
         modal.titleField.value = "";
+
+        // reset additional error if project modal
+        if (modal === Modals.newProjectModal || modal === Modals.editProjectModal) {
+            modal.takenErrorText.style.display = "none";
+        }
 
         // reset additional fields for todo modals
         if (modal === Modals.newTodoModal) {
@@ -103,8 +108,12 @@ const DOM = (() => {
         }
     }
 
-    function displayError(modal) {
-        modal.errorText.style.display = "block";
+    function displayEmptyError(modal) {
+        modal.emptyErrorText.style.display = "block";
+    }
+
+    function displayTakenError(modal) {
+        modal.takenErrorText.style.display = "block";
     }
 
     function clearProjects() {
@@ -318,7 +327,7 @@ const DOM = (() => {
         container.classList.add("selected");
     }
 
-    return { displayModal, closeModal, displayError, updateDisplay };
+    return { displayModal, closeModal, displayEmptyError, displayTakenError, updateDisplay };
 })();
 
 export default DOM;
