@@ -69,7 +69,7 @@ const Handler = (() => {
     // // toggle complete/incomplete status todo
     function toggleComplete(index) {
         const todo = getTodo(index);
-        todo.complete = (todo.complete) ? false : true;
+        todo.complete = !todo.complete;
     }
 
     // returns boolean whether the title exists or not
