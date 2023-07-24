@@ -26,7 +26,11 @@ const Info = (() => {
         const todos = getAllTodos();
         const today = new Date();
 
+        console.log(todos)
+
         const todayTodos = todos.filter(todo => {
+            console.log(todo)
+            console.log(todo.date)
             const todoDate = parseDateString(todo.date);
 
             return (todoDate.getDate() === today.getDate() &&
@@ -100,6 +104,32 @@ const Info = (() => {
         selected: false
     }];
 
+    // save data to local storage
+    const saveToLocalStorage = () => {
+        localStorage.setItem("projects", JSON.stringify(projects));
+        localStorage.setItem("filters", JSON.stringify(filters));
+    }
+
+    // get saved data from local storage
+    const getFromLocalStorage = () => {
+        const storedProjects = localStorage.getItem("projects");
+        const storedFilters = localStorage.getItem("filters");
+
+        // If no data in local storage, return predefined arrays
+        if (!storedProjects || !storedFilters) {
+            return {
+                projects,
+                filters,
+            }
+        }
+
+        // If there is data in local storage, retrieve it and return
+        return {
+            projects: JSON.parse(storedProjects),
+            filters: JSON.parse(storedFilters),
+        };
+    };
+
     // updates filters by calling functions to get todos
     const updateFilters = () => {
         const allFilter = filters.find(filter => filter.title === "All");
@@ -115,7 +145,15 @@ const Info = (() => {
         thisWeekFilter.todos = getWeeklyTodos();
     }
 
-    return { projects, filters, getAllFilters };
+    // Initialize projects and filters from localStorage on page load
+    const initializeData = () => {
+        const { projects: storedProjects, filters: storedFilters } = getFromLocalStorage();
+        projects = storedProjects;
+        filters = storedFilters;
+    }
+
+
+    return { projects, filters, getAllFilters, saveToLocalStorage, initializeData };
 })();
 
 export default Info;

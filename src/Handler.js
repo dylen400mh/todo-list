@@ -114,6 +114,10 @@ const Handler = (() => {
                 }
 
                 DOM.closeModal(modal);
+
+                // save updated info to localStorage
+                Info.saveToLocalStorage();
+
                 DOM.updateDisplay();
             }
 
@@ -175,12 +179,19 @@ const Handler = (() => {
             deleteProject(getFilterObject(e));
         }
 
-        DOM.updateDisplay()
+        // save updated info to localStorage
+        Info.saveToLocalStorage();
+
+        DOM.updateDisplay();
     }
 
     // handle todo click (toggling complete)
     function handleTodoClick(e) {
         toggleComplete(getTodoIndex(e));
+
+        // save updated info to localStorage
+        Info.saveToLocalStorage();
+
         DOM.updateDisplay();
     }
 
@@ -199,6 +210,9 @@ const Handler = (() => {
 
         // select new filter
         selectProject(selectedFilter);
+
+        // save updated info to localStorage
+        Info.saveToLocalStorage();
 
         // update displays
         DOM.updateDisplay();
