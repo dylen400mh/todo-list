@@ -26,13 +26,7 @@ const Info = (() => {
         const todos = getAllTodos();
         const today = new Date();
 
-        console.log(todos)
-
         const todayTodos = todos.filter(todo => {
-            console.log(todo)
-            console.log(todo.date)
-
-            
             const todoDate = parseDateString(todo.date);
 
             return (todoDate.getDate() === today.getDate() &&
