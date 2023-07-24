@@ -21,8 +21,8 @@ const DOM = (() => {
         // todo-related modals
         if (modalClicked === Modals.editTodoModal || modalClicked === Modals.todoInfoModal) {
 
-            const project = Handler.getSelectedFilter();
-            const todo = project.todos[todoIndex];
+            const selectedFilter = Handler.getSelectedFilter();
+            const todo = selectedFilter.todos[todoIndex];
 
             const title = todo.title;
             const description = todo.description;
@@ -32,9 +32,13 @@ const DOM = (() => {
             // if todo info modal grab extra values
             if (modalClicked === Modals.todoInfoModal) {
                 const complete = todo.complete;
-                const projectTitle = project.title;
 
-                showModal(modalClicked, title, description, date, priority, complete, projectTitle);
+                const title = todo.projectTitle;
+
+                // find todo's project
+                const project = Info.projects.find(project => project.title === title);
+
+                showModal(modalClicked, title, description, date, priority, complete, project.title);
             }
 
             // if edit todo modal
