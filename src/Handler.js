@@ -49,7 +49,7 @@ const Handler = (() => {
 
     // delete todo from project
     function deleteTodo(index) {
-        const selectedTodo = getSelectedFilter().todos[index];
+        const selectedTodo = getTodo[index];
         const title = selectedTodo.projectTitle;
 
         // find todo's project
