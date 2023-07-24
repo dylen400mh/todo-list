@@ -32,11 +32,10 @@ const DOM = (() => {
             // if todo info modal grab extra values
             if (modalClicked === Modals.todoInfoModal) {
                 const complete = todo.complete;
-
-                const title = todo.projectTitle;
-
+                const projectTitle = todo.projectTitle;
+    
                 // find todo's project
-                const project = Info.projects.find(project => project.title === title);
+                const project = Info.projects.find(project => project.title === projectTitle);
 
                 showModal(modalClicked, title, description, date, priority, complete, project.title);
             }
@@ -116,7 +115,10 @@ const DOM = (() => {
 
     function toggleErrorMessages(modal, displayEmptyError, displayTakenError) {
         modal.emptyErrorText.style.display = displayEmptyError ? "block" : "none";
-        modal.takenErrorText.style.display = displayTakenError ? "block" : "none";
+
+        if (modal === Modals.newProjectModal || modal === Modals.editProjectModal) {
+            modal.takenErrorText.style.display = displayTakenError ? "block" : "none";
+        }
     }
 
     function clearProjects() {
@@ -136,7 +138,7 @@ const DOM = (() => {
             const filterContainer = document.createElement("div");
             filterContainer.classList.add("sidebar-container");
             filterContainer.setAttribute("title", Info.filters[i].title);
-            filterContainer.addEventListener("click", (e) => {
+            Handler.addClickListener(filterContainer, (e) => {
                 Handler.handleFilterClick(e);
             })
 
@@ -159,10 +161,9 @@ const DOM = (() => {
             const projectContainer = document.createElement("div");
             projectContainer.classList.add("sidebar-container");
             projectContainer.setAttribute("title", Info.projects[i].title);
-            projectContainer.addEventListener("click", (e) => {
-                e.stopPropagation()
+            Handler.addClickListener(projectContainer, (e) => {
                 Handler.handleFilterClick(e);
-            });
+            })
 
             // if this project is selected, add the selected style
             if (Info.projects[i].selected) {
@@ -179,10 +180,9 @@ const DOM = (() => {
             editButton.src = "../src/images/icons8-edit-30.png";
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-project-button");
-            editButton.addEventListener("click", (e) => {
-                e.stopPropagation()
-                Handler.handleEditButtonClick(e, "project")
-            });
+            Handler.addClickListener(editButton, (e) => {
+                Handler.handleEditButtonClick(e, "project");
+            })
 
             // Only add a delete button if there is more than one project. We always want at least one project.
             if (Info.projects.length > 1) {
@@ -190,9 +190,8 @@ const DOM = (() => {
                 deleteButton.src = "../src/images/icons8-delete-24.png";
                 deleteButton.classList.add("delete-button");
                 deleteButton.classList.add("delete-project-button");
-                deleteButton.addEventListener("click", (e) => {
-                    e.stopPropagation()
-                    Handler.handleDeleteButtonClick(e, "project")
+                Handler.addClickListener(deleteButton, (e) => {
+                    Handler.handleDeleteButtonClick(e, "project");
                 })
 
                 // add each button to action buttons div
@@ -278,25 +277,22 @@ const DOM = (() => {
             editButton.src = "../src/images/icons8-edit-30.png";
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-todo-button");
-            editButton.addEventListener("click", (e) => {
-                e.stopPropagation(); // prevents todo from being toggled complete
+            Handler.addClickListener(editButton, (e) => {
                 Handler.handleEditButtonClick(e, "todo");
-            });
+            })
 
             const deleteButton = document.createElement("img");
             deleteButton.src = "../src/images/icons8-delete-24.png";
             deleteButton.classList.add("delete-button");
             deleteButton.classList.add("delete-todo-button");
-            deleteButton.addEventListener("click", (e) => {
-                e.stopPropagation(); // prevents todo from being toggled complete
+            Handler.addClickListener(deleteButton, (e) => {
                 Handler.handleDeleteButtonClick(e, "todo");
             })
 
             const infoButton = document.createElement("img");
             infoButton.src = "../src/images/icons8-info-24.png";
             infoButton.classList.add("info-button");
-            infoButton.addEventListener("click", (e) => {
-                e.stopPropagation(); //prevents todo from being toggled complete
+            Handler.addClickListener(infoButton, (e) => {
                 Handler.handleTodoInfoClick(e);
             })
 

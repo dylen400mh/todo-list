@@ -22,6 +22,10 @@ const Handler = (() => {
     // edit project by changing its title and updating display
     function editProject(project, title) {
         project.title = title;
+        
+        // change project corresponding with each todo
+        project.todos.map(todo => todo.projectTitle = title);
+
     }
 
     // delete project by splicing projects array at project's index
@@ -80,6 +84,7 @@ const Handler = (() => {
     // validate form
     function validateForm(modal) {
         const title = modal.titleField.value; //get title from input box
+        const projectTitle = getSelectedFilter().title
 
         // display error if no title
         if (!title) {
@@ -106,7 +111,7 @@ const Handler = (() => {
             const description = modal.descField.value;
             const dueDate = modal.dueDateField.value;
             const priority = modal.priorityField.value;
-            addTodo(title, description, dueDate, priority, getSelectedFilter().title);
+            addTodo(title, description, dueDate, priority, projectTitle);
         }
         // edit existing todo
         else if (modal === Modals.editTodoModal) {
@@ -243,6 +248,14 @@ const Handler = (() => {
         DOM.displayModal(e, Modals.newTodoModal);
     }
 
+    // used in DOM module to add event listeners to buttons
+    function addClickListener(button, clickHandler) {
+        button.addEventListener("click", (e) => {
+            e.stopPropagation();
+            clickHandler(e);
+        });
+    }
+
     // display new project modal
     newProjectButton.addEventListener("click", (e) => {
         DOM.displayModal(e, Modals.newProjectModal);
@@ -268,7 +281,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, HandleNewTodoClick, setDefaultFilter, getSelectedFilter, getFilterObject, unselectProject, selectProject }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, HandleNewTodoClick, setDefaultFilter, getSelectedFilter, getFilterObject, unselectProject, selectProject, addClickListener }
 })();
 
 export default Handler;
