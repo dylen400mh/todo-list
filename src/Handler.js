@@ -281,7 +281,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, HandleNewTodoClick, setDefaultFilter, getSelectedFilter, getFilterObject }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, HandleNewTodoClick, setDefaultFilter, getSelectedFilter, getFilterObject, unselectProject, selectProject }
 })();
 
 export default Handler;

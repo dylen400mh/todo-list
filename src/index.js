@@ -1,9 +1,11 @@
 import "./style.css";
 import DOM from "./DOM.js";
-import Info from "./Info.js"
+import Handler from "./Handler.js";
+import Info from "./Info.js";
 
-// initialize data from localStorage
-Info.initializeData();
+// Set selected filter to "All" on page load
+Handler.unselectProject();
+Handler.selectProject(Info.filters[0]);
 
 // add projects/filters to display
 DOM.updateDisplay();

@@ -77,7 +77,7 @@ const Info = (() => {
     let filters = [{
         title: "All",
         todos: getAllTodos(),
-        selected: true,
+        selected: false,
     },
     {
         title: "Today",
@@ -142,14 +142,11 @@ const Info = (() => {
     }
 
     // Initialize projects and filters from localStorage on page load
-    const initializeData = () => {
-        const { projects: storedProjects, filters: storedFilters } = getFromLocalStorage();
-        projects = storedProjects;
-        filters = storedFilters;
-    }
+    const { projects: storedProjects, filters: storedFilters } = getFromLocalStorage();
+    projects = storedProjects;
+    filters = storedFilters;
 
-
-    return { projects, filters, getAllFilters, saveToLocalStorage, initializeData };
+    return { projects, filters, getAllFilters, saveToLocalStorage };
 })();
 
 export default Info;
