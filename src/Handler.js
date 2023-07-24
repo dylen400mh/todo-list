@@ -80,7 +80,18 @@ const Handler = (() => {
     // validate form
     function validateForm(modal) {
         const title = modal.titleField.value; //get title from input box
-        let description, dueDate, priority; // declare todo variables
+
+        // display error if no title
+        if (!title) {
+            DOM.displayEmptyError(modal);
+            return;
+        }
+
+        // if project modal, check if the project name is taken
+        if ((modal === Modals.newProjectModal || modal === Modals.editProjectModal) && checkExistingTitles(title)) {
+            DOM.displayTakenError(modal);
+            return;
+        }
 
         //if validating a todo form get the other values
         if (modal === Modals.newTodoModal || modal === Modals.editTodoModal) {
@@ -89,43 +100,35 @@ const Handler = (() => {
             priority = modal.priorityField.value;
         }
 
-        // if a title was entered perform the appropriate action, else display error message
-        if (title !== "") {
-            // if project modal, check if the project name is taken
-            if ((modal === Modals.newProjectModal || modal === Modals.editProjectModal) && checkExistingTitles(title)) {
-                DOM.displayTakenError(modal);
-            } else {
-                // add new project
-                if (modal === Modals.newProjectModal) {
-                    addProject(title);
-                }
-                // edit existing project
-                else if (modal === Modals.editProjectModal) {
-                    editProject(selectedFilter, title);
-                }
-                // create new todo
-                else if (modal === Modals.newTodoModal) {
-                    addTodo(title, description, dueDate, priority, getSelectedFilter().title);
-                }
-                // edit existing todo
-                else if (modal === Modals.editTodoModal) {
-                    editTodo(getSelectedFilter().todos[index], title, description, dueDate, priority)
-                }
-
-                DOM.closeModal(modal);
-
-                // save updated info to localStorage
-                Info.saveToLocalStorage();
-
-                DOM.updateDisplay();
-            }
-
-
-        } else {
-            DOM.displayEmptyError(modal);
+        // add new project
+        if (modal === Modals.newProjectModal) {
+            addProject(title);
+        }
+        // edit existing project
+        else if (modal === Modals.editProjectModal) {
+            editProject(selectedFilter, title);
+        }
+        // create new todo
+        else if (modal === Modals.newTodoModal) {
+            const description = modal.descField.value;
+            const dueDate = modal.dueDateField.value;
+            const priority = modal.priorityField.value;
+            addTodo(title, description, dueDate, priority, getSelectedFilter().title);
+        }
+        // edit existing todo
+        else if (modal === Modals.editTodoModal) {
+            const description = modal.descField.value;
+            const dueDate = modal.dueDateField.value;
+            const priority = modal.priorityField.value;
+            editTodo(getSelectedFilter().todos[index], title, description, dueDate, priority)
         }
 
+        DOM.closeModal(modal);
 
+        // save updated info to localStorage
+        Info.saveToLocalStorage();
+
+        DOM.updateDisplay();
     }
 
     // unselects a project
