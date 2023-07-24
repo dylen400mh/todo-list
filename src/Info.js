@@ -1,5 +1,5 @@
 const Info = (() => {
-    let projects = [{ title: "First Project", todos: [{ title: "Walk my dog", description: "I need to walk my dog today.", date: "2023-07-16", priority: "high", complete: false }], selected: false }];
+    let projects = [{ title: "First Project", todos: [{ title: "Walk my dog", description: "I need to walk my dog today.", date: "2023-07-16", priority: "high", complete: false, projectTitle: "First Project" }], selected: false }];
 
     // function returns an array with all todos
     const getAllTodos = () => {

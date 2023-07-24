@@ -32,8 +32,8 @@ const Handler = (() => {
     }
 
     // create new todo
-    function addTodo(title, description, dueDate, priority) {
-        const todo = new Todo(title, description, dueDate, priority);
+    function addTodo(title, description, dueDate, priority, projectTitle) {
+        const todo = new Todo(title, description, dueDate, priority, projectTitle);
         getSelectedFilter().todos.push(todo);
     }
 
@@ -49,7 +49,15 @@ const Handler = (() => {
 
     // delete todo from project
     function deleteTodo(index) {
-        getSelectedFilter().todos.splice(index, 1);
+        const selectedTodo = getSelectedFilter().todos[index];
+        const title = selectedTodo.projectTitle;
+
+        // find todo's project
+        const project = Info.projects.find(project => project.title === title);
+        const todoIndex = project.todos.findIndex(todo => todo == selectedTodo)
+
+        // delete todo from project
+        project.todos.splice(todoIndex, 1);
     }
 
     function editTodo(todo, title, description, date, priority) {
@@ -98,7 +106,7 @@ const Handler = (() => {
                 }
                 // create new todo
                 else if (modal === Modals.newTodoModal) {
-                    addTodo(title, description, dueDate, priority);
+                    addTodo(title, description, dueDate, priority, getSelectedFilter().title);
                 }
                 // edit existing todo
                 else if (modal === Modals.editTodoModal) {

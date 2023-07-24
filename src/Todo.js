@@ -1,11 +1,12 @@
 export default class Todo {
 
-    constructor(title, description, date, priority) {
+    constructor(title, description, date, priority, projectTitle) {
         this.title = title;
         this.description = description;
         this.date = date;
         this.priority = priority;
         this.complete = false;
+        this.projectTitle = projectTitle;
     }
 
     get title() {
@@ -46,5 +47,13 @@ export default class Todo {
 
     set complete(comp) {
         this._complete = comp;
+    }
+
+    get projectTitle() {
+        return this._projectTitle;
+    }
+
+    set projectTitle(pTitle) {
+        this._projectTitle = pTitle;
     }
 }
