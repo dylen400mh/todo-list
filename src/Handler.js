@@ -87,8 +87,8 @@ const Handler = (() => {
             return;
         }
 
-        // if project modal, check if the project name is taken
-        if ((modal === Modals.newProjectModal || modal === Modals.editProjectModal) && checkExistingTitles(title)) {
+        // if project modal, check if the project name is taken (the last condition doesn't consider the current project's title)
+        if ((modal === Modals.newProjectModal || modal === Modals.editProjectModal) && checkExistingTitles(title) && selectedFilter.title !== title) {
             DOM.toggleErrorMessages(modal, false, true); // displays taken error, but not empty error
             return;
         }
