@@ -33,7 +33,7 @@ const DOM = (() => {
             if (modalClicked === Modals.todoInfoModal) {
                 const complete = todo.complete;
                 const projectTitle = todo.projectTitle;
-    
+
                 // find todo's project
                 const project = Info.projects.find(project => project.title === projectTitle);
 
@@ -121,15 +121,9 @@ const DOM = (() => {
         }
     }
 
-    function clearProjects() {
-        while (projectsContainer.firstChild) {
-            projectsContainer.removeChild(projectsContainer.firstChild);
-        }
-    }
-
-    function clearFilters() {
-        while (filtersContainer.firstChild) {
-            filtersContainer.removeChild(filtersContainer.firstChild);
+    function clearElement(element) {
+        while (element.firstChild) {
+            element.removeChild(element.firstChild);
         }
     }
 
@@ -205,13 +199,6 @@ const DOM = (() => {
 
             // add project container to projects list 
             projectsContainer.appendChild(projectContainer);
-        }
-    }
-
-    // clears todo display
-    function clearTodos() {
-        while (todosContainer.firstChild) {
-            todosContainer.removeChild(todosContainer.firstChild);
         }
     }
 
@@ -331,9 +318,9 @@ const DOM = (() => {
     function clearDisplay() {
 
         if (todosTitleContainer.childElementCount > 1) removeAddTodoButton();
-        clearFilters();
-        clearProjects();
-        clearTodos();
+        clearElement(projectsContainer);
+        clearElement(filtersContainer);
+        clearElement(todosContainer);
     }
 
     // update display
