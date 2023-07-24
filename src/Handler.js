@@ -48,7 +48,7 @@ const Handler = (() => {
 
     // delete todo from project
     function deleteTodo(index) {
-        const selectedTodo = getTodo[index];
+        const selectedTodo = getTodo(index);
         const title = selectedTodo.projectTitle;
 
         // find todo's project
@@ -91,13 +91,6 @@ const Handler = (() => {
         if ((modal === Modals.newProjectModal || modal === Modals.editProjectModal) && checkExistingTitles(title)) {
             DOM.displayTakenError(modal);
             return;
-        }
-
-        //if validating a todo form get the other values
-        if (modal === Modals.newTodoModal || modal === Modals.editTodoModal) {
-            description = modal.descField.value;
-            dueDate = modal.dueDateField.value;
-            priority = modal.priorityField.value;
         }
 
         // add new project
@@ -173,8 +166,7 @@ const Handler = (() => {
     function handleDeleteButtonClick(e, object) {
         // get index based on type of object (todo or project)
         if (object === "todo") {
-            index = getTodoIndex(e);
-            deleteTodo(index);
+            deleteTodo(getTodoIndex(e));
         }
 
         if (object === "project") {
