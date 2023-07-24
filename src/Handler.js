@@ -7,7 +7,6 @@ import Todo from "./Todo.js";
 const Handler = (() => {
     const newProjectButton = document.querySelector(".new-project-button");
     const modal = document.querySelector(".modal");
-    const cancelModalButtons = document.querySelectorAll(".cancel-button");
     const confirmModalButtons = document.querySelectorAll(".confirm-button");
 
     // create closures to store the selected filter or index for editing purposes
@@ -256,17 +255,10 @@ const Handler = (() => {
 
     // close modal
     modal.addEventListener("click", (e) => {
-        if (e.target.classList.contains("modal")) {
+        if (e.target.classList.contains("modal") || e.target.classList.contains("cancel-button")) {
             DOM.closeModal(getOpenModal());
         }
     });
-
-    // cancel modal buttons
-    cancelModalButtons.forEach(button => {
-        button.addEventListener("click", () => {
-            DOM.closeModal(getOpenModal());
-        });
-    })
 
     // validate form if user clicks the confirm button OR hits enter when the modal is open
     confirmModalButtons.forEach(button => {
