@@ -83,13 +83,13 @@ const Handler = (() => {
 
         // display error if no title
         if (!title) {
-            DOM.displayEmptyError(modal);
+            DOM.toggleErrorMessages(modal, true, false); // displays empty error, but not taken error
             return;
         }
 
         // if project modal, check if the project name is taken
         if ((modal === Modals.newProjectModal || modal === Modals.editProjectModal) && checkExistingTitles(title)) {
-            DOM.displayTakenError(modal);
+            DOM.toggleErrorMessages(modal, false, true); // displays taken error, but not empty error
             return;
         }
 

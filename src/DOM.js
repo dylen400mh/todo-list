@@ -89,13 +89,13 @@ const DOM = (() => {
 
     // resets input fields / error messages
     function resetModalFields(modal) {
-        modal.emptyErrorText.style.display = "none";
+        toggleErrorMessages(modal, false, false); // disables both error messages
         modal.titleField.value = "";
 
-        // reset additional error if project modal
-        if (modal === Modals.newProjectModal || modal === Modals.editProjectModal) {
-            modal.takenErrorText.style.display = "none";
-        }
+        // // reset additional error if project modal
+        // if (modal === Modals.newProjectModal || modal === Modals.editProjectModal) {
+        //     toggleTakenError(modal, false);
+        // }
 
         // reset additional fields for todo modals
         if (modal === Modals.newTodoModal) {
@@ -114,22 +114,9 @@ const DOM = (() => {
         }
     }
 
-    function displayEmptyError(modal) {
-        hideTakenError(modal);
-        modal.emptyErrorText.style.display = "block";
-    }
-
-    function displayTakenError(modal) {
-        hideEmptyError(modal);
-        modal.takenErrorText.style.display = "block";
-    }
-
-    function hideTakenError(modal) {
-        modal.takenErrorText.style.display = "none";
-    }
-
-    function hideEmptyError(modal) {
-        modal.emptyErrorText.style.display = "none";
+    function toggleErrorMessages(modal, displayEmptyError, displayTakenError) {
+        modal.emptyErrorText.style.display = displayEmptyError ? "block" : "none";
+        modal.takenErrorText.style.display = displayTakenError ? "block" : "none";
     }
 
     function clearProjects() {
@@ -373,7 +360,7 @@ const DOM = (() => {
         container.classList.add("selected");
     }
 
-    return { displayModal, closeModal, displayEmptyError, displayTakenError, updateDisplay };
+    return { displayModal, closeModal, toggleErrorMessages, updateDisplay };
 })();
 
 export default DOM;
