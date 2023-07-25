@@ -186,22 +186,6 @@ img:hover {
     height: 1.5rem;
 }
 
-.add-button {
-    background: url(../src/images/icons8-add-32.png);
-}
-
-.edit-button {
-    background: url(../src/images/icons8-edit-30.png);
-}
-
-.delete-button {
-    background: url(../src/images/icons8-delete-24.png);
-}
-
-.info-button {
-    background: url(../src/images/icons8-info-24.png);
-}
-
 /* MODAL */
 
 .modal {
