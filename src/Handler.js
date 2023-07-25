@@ -22,7 +22,7 @@ const Handler = (() => {
     // edit project by changing its title and updating display
     function editProject(project, title) {
         project.title = title;
-        
+
         // change project corresponding with each todo
         project.todos.map(todo => todo.projectTitle = title);
 
@@ -63,6 +63,7 @@ const Handler = (() => {
         project.todos.splice(todoIndex, 1);
     }
 
+    // edit a todo
     function editTodo(todo, title, description, date, priority) {
         todo.title = title;
         todo.description = description;
@@ -70,7 +71,7 @@ const Handler = (() => {
         todo.priority = priority;
     }
 
-    // // toggle complete/incomplete status todo
+    // toggle complete/incomplete status todo
     function toggleComplete(index) {
         const todo = getTodo(index);
         todo.complete = !todo.complete;
@@ -156,11 +157,13 @@ const Handler = (() => {
 
     // handle edit button click
     function handleEditButtonClick(e, object) {
+        // if todo edit button is clicked
         if (object === "todo") {
             index = getTodoIndex(e);
             DOM.displayModal(e, Modals.editTodoModal, index);
         }
 
+        // if project edit button is clicked
         if (object === "project") {
             selectedFilter = getFilterObject(e);
             DOM.displayModal(e, Modals.editProjectModal);
@@ -223,7 +226,7 @@ const Handler = (() => {
 
         // loops through each modal checking which one is open
         for (let modalKey in Modals) {
-
+            
             if (Modals.hasOwnProperty(modalKey)) {
                 const modal = Modals[modalKey];
                 if (modal.element.style.display === "block") {

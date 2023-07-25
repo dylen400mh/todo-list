@@ -53,6 +53,7 @@ const DOM = (() => {
         }
     }
 
+    // show modal and set fields based on todo/project info
     function showModal(modal, title = "", description = "", date = "", priority = "", complete = "", project = "") {
         modal.element.style.display = "block";
 
@@ -91,11 +92,6 @@ const DOM = (() => {
         toggleErrorMessages(modal, false, false); // disables both error messages
         modal.titleField.value = "";
 
-        // // reset additional error if project modal
-        // if (modal === Modals.newProjectModal || modal === Modals.editProjectModal) {
-        //     toggleTakenError(modal, false);
-        // }
-
         // reset additional fields for todo modals
         if (modal === Modals.newTodoModal) {
             modal.descField.value = "";
@@ -104,6 +100,7 @@ const DOM = (() => {
         }
     }
 
+    // closes modal and resets modal fields
     function closeModal(modalToClose) {
         modal.style.display = "none";
         modalToClose.element.style.display = "none";
@@ -113,25 +110,31 @@ const DOM = (() => {
         }
     }
 
+    // toggles error messages
     function toggleErrorMessages(modal, displayEmptyError, displayTakenError) {
         modal.emptyErrorText.style.display = displayEmptyError ? "block" : "none";
 
+        // only toggle taken error for project modals
         if (modal === Modals.newProjectModal || modal === Modals.editProjectModal) {
             modal.takenErrorText.style.display = displayTakenError ? "block" : "none";
         }
     }
 
+    // clears dynamic DOM elements from page
     function clearElement(element) {
         while (element.firstChild) {
             element.removeChild(element.firstChild);
         }
     }
 
+    // adds filters to display
     function displayFilters() {
         for (let i = 0; i < Info.filters.length; i++) {
             const filterContainer = document.createElement("div");
             filterContainer.classList.add("sidebar-container");
             filterContainer.setAttribute("title", Info.filters[i].title);
+
+            // add click handler
             Handler.addClickListener(filterContainer, (e) => {
                 Handler.handleFilterClick(e);
             })
@@ -155,6 +158,8 @@ const DOM = (() => {
             const projectContainer = document.createElement("div");
             projectContainer.classList.add("sidebar-container");
             projectContainer.setAttribute("title", Info.projects[i].title);
+
+            // add click handler
             Handler.addClickListener(projectContainer, (e) => {
                 Handler.handleFilterClick(e);
             })
@@ -174,6 +179,8 @@ const DOM = (() => {
             editButton.src = "../src/images/icons8-edit-30.png";
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-project-button");
+
+            // add click handler
             Handler.addClickListener(editButton, (e) => {
                 Handler.handleEditButtonClick(e, "project");
             })
@@ -184,6 +191,8 @@ const DOM = (() => {
                 deleteButton.src = "../src/images/icons8-delete-24.png";
                 deleteButton.classList.add("delete-button");
                 deleteButton.classList.add("delete-project-button");
+
+                // add click handler
                 Handler.addClickListener(deleteButton, (e) => {
                     Handler.handleDeleteButtonClick(e, "project");
                 })
@@ -296,19 +305,23 @@ const DOM = (() => {
 
     // add complete/incomplete todo styles + priority colour coding
     function addTodoStyles(todo, checkbox, todoTitle) {
+        // complete todos
         if (todo.complete) {
             checkbox.classList.add("complete");
             todoTitle.style.textDecoration = "line-through";
         }
 
+        // low priority
         if (todo.priority === "low") {
             todoTitle.style.color = "#32CD32";
         }
 
+        // medium priority
         if (todo.priority === "medium") {
             todoTitle.style.color = "#DAA520";
         }
 
+        // high priority
         if (todo.priority === "high") {
             todoTitle.style.color = "#FF6347";
         }
@@ -317,6 +330,7 @@ const DOM = (() => {
     // clears display
     function clearDisplay() {
 
+        // remove add todo button 
         if (todosTitleContainer.childElementCount > 1) removeAddTodoButton();
         clearElement(projectsContainer);
         clearElement(filtersContainer);
@@ -331,7 +345,8 @@ const DOM = (() => {
         // clear display
         clearDisplay();
 
-        updateContentHeader();
+
+        updateContentHeader(); // update content title and add 'add todo' button if a project is selected
         displayFilters();
         displayProjects();
         displayTodos();

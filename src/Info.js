@@ -1,4 +1,5 @@
 const Info = (() => {
+    // initial project array with one todo
     let projects = [{ title: "First Project", todos: [{ title: "Walk my dog", description: "I need to walk my dog today.", date: "2023-07-16", priority: "high", complete: false, projectTitle: "First Project" }], selected: false }];
 
     // function returns an array with all todos
@@ -18,10 +19,12 @@ const Info = (() => {
         return getAllTodos().filter(todo => todo.priority === "high");
     }
 
+    // get all completed todos
     const getCompleteTodos = () => {
         return getAllTodos().filter(todo => todo.complete);
     }
 
+    // get todos due today
     const getTodayTodos = () => {
         const todos = getAllTodos();
         const today = new Date();
@@ -37,6 +40,7 @@ const Info = (() => {
         return todayTodos;
     }
 
+    // get todos due this week
     const getWeeklyTodos = () => {
         const todos = getAllTodos();
         const today = new Date();
@@ -74,6 +78,7 @@ const Info = (() => {
         return array;
     }
 
+    // filter objects
     let filters = [{
         title: "All",
         todos: getAllTodos(),
@@ -134,6 +139,7 @@ const Info = (() => {
         const todayFilter = filters.find(filter => filter.title === "Today");
         const thisWeekFilter = filters.find(filter => filter.title === "This Week");
 
+        // update todos for each filter
         allFilter.todos = getAllTodos();
         importantFilter.todos = getImportantTodos();
         completeFilter.todos = getCompleteTodos();
