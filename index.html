@@ -25,6 +25,7 @@
                 <span>Completed</span>
             </div>
         </div>
+        <!--Projects-->
         <div class="projects-title">
             <span>Projects</span>
             <img src="../src/images/icons8-add-32.png" alt="add button" class="add-button new-project-button">
@@ -36,7 +37,8 @@
     <!--CONTENT-->
     <div class="content">
         <div class="todos-title">
-            <span>All</span>
+            <!-- Title for the current todo list (All/Important/Completed) -->
+            <span></span>
         </div>
         <!--Dynamically created-->
         <div class="todos"></div>
@@ -52,14 +54,17 @@
                     <span>New Project</span>
                 </div>
                 <div class="modal-content">
+                    <!-- Input field for project title -->
                     <label for="project-title">
                         Title
                         <span class="required">*</span>
                     </label>
                     <input type="text" id="project-title" name="project-title" class="project-title">
+                    <!-- Error messages -->
                     <span class="error-text empty">Please fill out this field</span>
                     <span class="error-text taken">Sorry, this project name is taken</span>
 
+                    <!-- Action buttons for modal -->
                     <div class="action-buttons">
                         <button class="cancel-button">Cancel</button>
                         <button class="confirm-button">Confirm</button>
@@ -73,13 +78,16 @@
                     <span>Edit Project</span>
                 </div>
                 <div class="modal-content">
+                    <!-- Input field for editing project title -->
                     <label for="project-title">
                         Title
                         <span class="required">*</span>
                     </label>
                     <input type="text" id="project-title" name="project-title" class="project-title">
+                    <!-- Error messages -->
                     <span class="error-text empty">Please fill out this field</span>
                     <span class="error-text taken">Sorry, this project name is taken</span>
+                    <!-- Action buttons for modal -->
                     <div class="action-buttons">
                         <button class="cancel-button">Cancel</button>
                         <button class="confirm-button">Confirm</button>
@@ -147,7 +155,7 @@
                 </div>
             </div>
 
-            <!--TODO INFO MODAL IS CREATED DYNAMICALLY-->
+            <!--TODO INFO MODAL-->
             <div id="todo-info-modal">
                 <div class="modal-title">
                     <span>To-Do Info</span>
