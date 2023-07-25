@@ -180,7 +180,7 @@ const DOM = (() => {
             const actionButtons = document.createElement("div");
             actionButtons.classList.add("action-buttons");
 
-            const editButton = document.createElement("img");
+            const editButton = new Image();
             editButton.src = editButtonImg;
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-project-button");
@@ -192,7 +192,7 @@ const DOM = (() => {
 
             // Only add a delete button if there is more than one project. We always want at least one project.
             if (Info.projects.length > 1) {
-                const deleteButton = document.createElement("img");
+                const deleteButton = new Image();
                 deleteButton.src = deleteButtonImg;
                 deleteButton.classList.add("delete-button");
                 deleteButton.classList.add("delete-project-button");
@@ -233,7 +233,7 @@ const DOM = (() => {
 
     // adds 'add todo' button to screen
     function displayAddTodoButton() {
-        const addTodoButton = document.createElement("img");
+        const addTodoButton = new Image();
         addTodoButton.src = addButtonImg;
         addTodoButton.classList.add("add-button");
         addTodoButton.classList.add("new-todo-button");
@@ -274,7 +274,7 @@ const DOM = (() => {
             const actionButtons = document.createElement("div");
             actionButtons.classList.add("action-buttons");
 
-            const editButton = document.createElement("img");
+            const editButton = new Image();
             editButton.src = editButtonImg;
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-todo-button");
@@ -282,7 +282,7 @@ const DOM = (() => {
                 Handler.handleEditButtonClick(e, "todo");
             })
 
-            const deleteButton = document.createElement("img");
+            const deleteButton = new Image();
             deleteButton.src = deleteButtonImg;
             deleteButton.classList.add("delete-button");
             deleteButton.classList.add("delete-todo-button");
@@ -290,7 +290,7 @@ const DOM = (() => {
                 Handler.handleDeleteButtonClick(e, "todo");
             })
 
-            const infoButton = document.createElement("img");
+            const infoButton = new Image();
             infoButton.src = infoButtonImg;
             infoButton.classList.add("info-button");
             Handler.addClickListener(infoButton, (e) => {
