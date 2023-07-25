@@ -260,9 +260,9 @@ const Handler = (() => {
     }
 
     // display new project modal
-    newProjectButton.addEventListener("click", (e) => {
+    function HandleNewProjectClick(e) {
         DOM.displayModal(e, Modals.newProjectModal);
-    })
+    }
 
     // close modal
     modal.addEventListener("click", (e) => {
@@ -284,7 +284,7 @@ const Handler = (() => {
         })
     })
 
-    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, HandleNewTodoClick, setDefaultFilter, getSelectedFilter, getFilterObject, unselectProject, selectProject, addClickListener }
+    return { handleEditButtonClick, handleDeleteButtonClick, handleTodoClick, handleTodoInfoClick, handleFilterClick, HandleNewTodoClick, setDefaultFilter, getSelectedFilter, getFilterObject, unselectProject, selectProject, addClickListener, HandleNewProjectClick }
 })();
 
 export default Handler;
