@@ -1,6 +1,11 @@
 import Info from "./Info.js";
 import Handler from "./Handler.js";
 import Modals from "./Modals.js";
+import editButtonImg from "../src/images/icons8-edit-30.png";
+import deleteButtonImg from "../src/images/icons8-delete-24.png";
+import addButtonImg from "../src/images/icons8-add-32.png";
+import infoButtonImg from "../src/images/icons8-info-24.png";
+
 
 const DOM = (() => {
     const modal = document.querySelector(".modal");
@@ -176,7 +181,7 @@ const DOM = (() => {
             actionButtons.classList.add("action-buttons");
 
             const editButton = document.createElement("img");
-            editButton.src = "../src/images/icons8-edit-30.png";
+            editButton.src = editButtonImg;
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-project-button");
 
@@ -188,7 +193,7 @@ const DOM = (() => {
             // Only add a delete button if there is more than one project. We always want at least one project.
             if (Info.projects.length > 1) {
                 const deleteButton = document.createElement("img");
-                deleteButton.src = "../src/images/icons8-delete-24.png";
+                deleteButton.src = deleteButtonImg;
                 deleteButton.classList.add("delete-button");
                 deleteButton.classList.add("delete-project-button");
 
@@ -229,7 +234,7 @@ const DOM = (() => {
     // adds 'add todo' button to screen
     function displayAddTodoButton() {
         const addTodoButton = document.createElement("img");
-        addTodoButton.src = "../src/images/icons8-add-32.png";
+        addTodoButton.src = addButtonImg;
         addTodoButton.classList.add("add-button");
         addTodoButton.classList.add("new-todo-button");
         addTodoButton.addEventListener("click", (e) => {
@@ -270,7 +275,7 @@ const DOM = (() => {
             actionButtons.classList.add("action-buttons");
 
             const editButton = document.createElement("img");
-            editButton.src = "../src/images/icons8-edit-30.png";
+            editButton.src = editButtonImg;
             editButton.classList.add("edit-button");
             editButton.classList.add("edit-todo-button");
             Handler.addClickListener(editButton, (e) => {
@@ -278,7 +283,7 @@ const DOM = (() => {
             })
 
             const deleteButton = document.createElement("img");
-            deleteButton.src = "../src/images/icons8-delete-24.png";
+            deleteButton.src = deleteButtonImg;
             deleteButton.classList.add("delete-button");
             deleteButton.classList.add("delete-todo-button");
             Handler.addClickListener(deleteButton, (e) => {
@@ -286,7 +291,7 @@ const DOM = (() => {
             })
 
             const infoButton = document.createElement("img");
-            infoButton.src = "../src/images/icons8-info-24.png";
+            infoButton.src = infoButtonImg;
             infoButton.classList.add("info-button");
             Handler.addClickListener(infoButton, (e) => {
                 Handler.handleTodoInfoClick(e);
