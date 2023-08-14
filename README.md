@@ -1,5 +1,7 @@
 # Todo List App
 
+[LIVE DEMO](https://dylen400mh.github.io/todo-list/)
+
 This project is a Todo List app implemented using HTML, CSS, and JavaScript. The main objective is to demonstrate skills in creating dynamic todo-items, organizing code using modules, handling user interactions, and adding persistence using the Web Storage API.
 
 ## Project Overview
